@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreVehicleRequest;
-use App\Http\Requests\UpdateVehicleRequest;
+
 use App\Models\Vehicle;
+use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
@@ -13,7 +13,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::all();
+        return view('admin.vehicles.index', compact('vehicles'));
     }
 
     /**
@@ -21,15 +22,22 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.vehicles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVehicleRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'make' => 'required|string',
+            'model' => 'required|string',
+            'fuelType' => 'required|string',
+            'registration' => 'required|string|unique:vehicles',
+        ]);
+        $vehicle = Vehicle::create($request->all());
+        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' created!');
     }
 
     /**
@@ -37,7 +45,7 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-        //
+        return view('admin.vehicles.show', compact('vehicle'));
     }
 
     /**
@@ -45,15 +53,24 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        //
+        return view('admin.vehicles.edit', compact('vehicle'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVehicleRequest $request, Vehicle $vehicle)
+    public function update(Request $request, Vehicle $vehicle)
     {
-        //
+
+        $request->validate([
+            'make' => 'required|string',
+            'model' => 'required|string',
+            'fuelType' => 'required|string',
+            'registration' => 'required|string|unique:vehicles',
+
+        ]);
+        $vehicle->update($request->all());
+        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' updated!');
     }
 
     /**
@@ -61,6 +78,7 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
-        //
+        $vehicle->delete();
+        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' deleted!');
     }
 }
