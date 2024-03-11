@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{ __('Admin Dashboard') }}</title>
     <!--favicon-->
     <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
@@ -74,9 +74,17 @@
     <script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
     <script src="{{ asset('assets/js/index.js') }}"></script>
+
+    <script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <!--notification js -->
+
 
     <script>
         window.gtranslateSettings = {
@@ -90,9 +98,6 @@
         }
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/flags.js"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
 </body>
 
 </html>

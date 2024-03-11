@@ -33,17 +33,7 @@
             <ul>
                 <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>Users</a>
                 </li>
-                <li> <a href="app-chat-box.html"><i class="bx bx-radio-circle"></i>Chat Box</a>
-                </li>
-                <li> <a href="app-file-manager.html"><i class="bx bx-radio-circle"></i>File Manager</a>
-                </li>
-                <li> <a href="app-contact-list.html"><i class="bx bx-radio-circle"></i>Contatcs</a>
-                </li>
-                <li> <a href="app-to-do.html"><i class="bx bx-radio-circle"></i>Todo List</a>
-                </li>
-                <li> <a href="app-invoice.html"><i class="bx bx-radio-circle"></i>Invoice</a>
-                </li>
-                <li> <a href="app-fullcalender.html"><i class="bx bx-radio-circle"></i>Calendar</a>
+                <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>Add user</a>
                 </li>
             </ul>
         </li>

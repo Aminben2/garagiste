@@ -41,4 +41,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 require __DIR__ . '/auth.php';
+
+
+// Route for handling 404 error (Page Not Found)
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
+
+// Route for handling 500 error (Internal Server Error)
+Route::get('/error', function () {
+    return response()->view('errors.500', [], 500);
+});

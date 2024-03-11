@@ -8,7 +8,6 @@
 
                     <li class="nav-item dropdown dropdown-laungauge d-none d-sm-flex">
                         <div class="gtranslate_wrapper"></div>
-
                     </li>
                     <li class="nav-item dark-mode d-none d-sm-flex">
                         <a class="nav-link dark-mode-icon" href="javascript:;"><i class='bx bx-moon'></i>
