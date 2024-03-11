@@ -1,17 +1,31 @@
 @extends('admin.index')
 @section('content')
     <div class="row">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show py-2">
+                <div class="d-flex align-items-center">
+                    <div class="font-35 text-white"><i class='bx bxs-message-square-x'></i>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0 text-white">Danger Alerts</h6>
+                        <div class="text-white">{{ $errors->first() }}</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="col-xl-6 mx-auto">
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Add New User</h5>
-                    <form class="row g-3">
-                        <div class="col-md-12 " method="post" action="{{ route('users.store') }}">
+                    <form class="row g-3" method="post" action="{{ route('users.store') }}">
+                        <div class="col-md-12">
+                            @csrf
                             <label for="input25" class="form-label">First Name</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-user'></i></span>
                                 <input name="firstName" type="text" class="form-control" id="input25"
-                                    placeholder="First Name">
+                                    placeholder="First Name" value="{{ old('firstName') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -19,15 +33,23 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-user'></i></span>
                                 <input name="lastName" type="text" class="form-control" id="input26"
-                                    placeholder="Last Name">
+                                    placeholder="Last Name" value="{{ old('lastName') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="input26" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class='bx bx-user'></i></span>
+                                <input name="username" type="text" class="form-control" id="input26"
+                                    placeholder="Username" value="{{ old('username') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="input27" class="form-label">Email</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-envelope'></i></span>
-                                <input name="email" type="text" class="form-control" id="input27"
-                                    placeholder="Email">
+                                <input name="email" type="text" class="form-control" id="input27" placeholder="Email"
+                                    value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -35,7 +57,7 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                                 <input name="password" type="password" class="form-control" id="input28"
-                                    placeholder="Password">
+                                    placeholder="Password" value="{{ old('password') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -43,19 +65,22 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-microphone'></i></span>
                                 <input name="phoneNumber" type="text" class="form-control" id="input29"
-                                    placeholder="Phone">
+                                    placeholder="Phone" value="{{ old('phoneNumber') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="input30" class="form-label">Role</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class='bx bx-flag'></i></span>
-                                <select name="role" class="form-select" id="input30">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">Admin</option>
-                                    <option value="2">Mechanic</option>
-                                    <option value="3">Client</option>
-                                </select>
+                            <div class="d-flex align-items-center gap-3">
+                                @foreach (App\Models\Role::all() as $role)
+                                    <div class="form-check form-check-info">
+                                        <input class="form-check-input" type="checkbox" value="{{ $role->id }}"
+                                            id="role-{{ $role->id }}" name="role[]"
+                                            {{ in_array($role->id, old('role', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="role-{{ $role->id }}">
+                                            {{ $role->name }}
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -64,7 +89,7 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class='bx bx-buildings'></i></span>
                                 <input name="address" type="text" class="form-control" id="input32"
-                                    placeholder="Address">
+                                    placeholder="Address" value="{{ old('address') }}">
                             </div>
                         </div>
 
