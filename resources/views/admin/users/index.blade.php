@@ -1,7 +1,7 @@
 @extends('admin.index')
 @section('content')
 
-    @component('admin.components.break-crump', ['title' => 'User Management', 'page' => 'Users'])
+    @component('admin.components.break-crump', ['title' => 'User Management', 'page' => 'Users', 'subpage' => ''])
     @endcomponent
     <div class="card">
         @if (!empty(session('status')))
