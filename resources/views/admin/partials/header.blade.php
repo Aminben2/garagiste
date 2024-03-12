@@ -69,10 +69,16 @@
                     </li>
 
                     <li>
-                        <div class="dropdown-divider mb-0"></div>
+                        <div class="dropdown-divider"></div>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"
+                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            <i class="bx bx-log-out-circle"></i><span>Logout</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
