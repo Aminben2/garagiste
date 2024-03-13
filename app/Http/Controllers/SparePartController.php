@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSparePartRequest;
-use App\Http\Requests\UpdateSparePartRequest;
 use App\Models\SparePart;
+use Illuminate\Http\Request;
 
 class SparePartController extends Controller
 {
@@ -27,7 +26,7 @@ class SparePartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSparePartRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -51,7 +50,7 @@ class SparePartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSparePartRequest $request, SparePart $sparePart)
+    public function update(Request $request, SparePart $sparePart)
     {
         //
     }

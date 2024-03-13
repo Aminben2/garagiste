@@ -18,10 +18,19 @@
                 <div class="menu-title">Dashboard</div>
             </a>
             <ul>
-                <li> <a href="index.html"><i class="bx bx-radio-circle"></i>Default</a>
-                </li>
-                <li> <a href="index2.html"><i class="bx bx-radio-circle"></i>Alternate</a>
-                </li>
+                @foreach (auth()->user()->roles->pluck('name')->toArray() as $role)
+                    @if ($role === 'admin')
+                        <li>
+                            <a href="{{ route('admin.dashboard') }}"><i class="bx bx-radio-circle"></i>Admin
+                                Dashboard</a>
+                        </li>
+                    @endif
+                    @if ($role === 'client')
+                        <li>
+                            <a href="{{ route('dashboard') }}"><i class="bx bx-radio-circle"></i>Client Dashboard</a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </li>
         <li>
