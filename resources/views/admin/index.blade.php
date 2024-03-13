@@ -99,6 +99,18 @@
         }
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/flags.js"></script>
+    <script>
+        // Smoothly show the success alert
+        document.getElementById('successAlert').style.opacity = 1;
+
+        // Smoothly hide the success alert after 5 seconds
+        setTimeout(function() {
+            document.getElementById('successAlert').style.opacity = 0;
+            setTimeout(function() {
+                document.getElementById('successAlert').style.display = 'none';
+            }, 500);
+        }, 5000);
+    </script>
 </body>
 
 </html>

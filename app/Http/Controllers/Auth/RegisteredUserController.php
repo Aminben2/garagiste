@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -41,7 +42,6 @@ class RegisteredUserController extends Controller
         ]);
 
 
-        // dd($request);
         $user = User::create([
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
@@ -52,6 +52,13 @@ class RegisteredUserController extends Controller
             'phoneNumber' => $request->input('phoneNumber'),
         ]);
 
+        // Assign default role to the user (assuming 'client' role exists)
+        $clientRole = Role::where('name', 'client')->first();
+        if ($clientRole) {
+            $user->roles()->attach($clientRole);
+        }
+
+        
         event(new Registered($user));
 
         Auth::login($user);

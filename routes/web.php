@@ -25,7 +25,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', "isClient"])->group(function () {
+
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',

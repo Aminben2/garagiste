@@ -26,7 +26,7 @@ class UserController extends Controller
                 ->orWhere('email', 'LIKE', "%{$searchTerm}%");
         }
 
-        $users = $usersQuery->paginate(10);
+        $users = $usersQuery->get();
 
         return view('admin.users.index', compact('users', 'searchTerm'));
     }
@@ -113,10 +113,6 @@ class UserController extends Controller
             'phoneNumber' => $request->input('phoneNumber'),
         ]);
 
-        // Attach roles to the user
-        // Sync the roles with the user, updating any existing records.
-        // This will remove any roles that are not included in the request,
-        // and add any new roles included in the request.
         $user->roles()->sync($request->input('role', ["client"]));
         return redirect()->route('users')->with('status', 'User ' . $user->username . ' updated!');
     }
@@ -127,31 +123,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
 
-        // Delete the user repairs and associated records.
-        $userRepairs = $user->repairs()->get();
-        $repairIds = $userRepairs->pluck('id')->toArray();
 
-        // Loop on repair ids and get the invoices by repair->invoices()
-        foreach ($repairIds as $repairId) {
-            // Get the invoices of a repair
-            $repairInvoices = \App\Models\Repair::find($repairId)->invoices;
-            // Loop on the invoices of a repair then delete each one of them from spare_part_invoice
-            foreach ($repairInvoices as $invoice) {
-                DB::table('spare_part_invoice')->where('invoice_id', $invoice->id)->delete();
-            }
-        }
 
-        // Delete the invoices associated with the user repairs.
-        DB::table('invoices')->whereIn('repair_id', $repairIds)->delete();
-
-        // Delete the user repairs.
-        foreach ($userRepairs as $repair) {
-            $repair->delete();
-        }
-
-        // Delete the user vehicles.
-        $user->vehicles()->delete();
-        $user->roles()->sync([]);;
         $user->delete();
         return redirect()->route('users')->with('status', 'User ' . $user->username . ' deleted!');
     }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('spare_part_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices');
-            $table->foreign('spare_part_id')->references('id')->on('spare_parts');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete("cascade");
+            $table->foreign('spare_part_id')->references('id')->on('spare_parts')->onDelete("cascade");
             $table->timestamps();
         });
     }

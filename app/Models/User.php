@@ -28,6 +28,8 @@ class User extends Authenticatable
         "phoneNumber",
     ];
 
+
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
