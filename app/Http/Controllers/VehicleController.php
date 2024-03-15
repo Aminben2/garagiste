@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -11,9 +11,26 @@ class VehicleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::all();
+        // $vehicles = Vehicle::all();
+
+        $vehicles = Vehicle::query();
+
+        $searchTerm = $request->input('search');
+
+        if ($searchTerm) {
+            $vehicles->where(function ($query) use ($searchTerm) {
+                $query->where('model', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('make', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('user', function ($query) use ($searchTerm) {
+                        $query->where('username', 'LIKE', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        $vehicles = $vehicles->get();
+
         return view('admin.vehicles.index', compact('vehicles'));
     }
 
@@ -22,7 +39,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('admin.vehicles.create');
+        $users = User::all();
+        return view('admin.vehicles.create', compact('users'));
     }
 
     /**
@@ -30,15 +48,21 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'make' => 'required|string',
             'model' => 'required|string',
             'fuelType' => 'required|string',
             'registration' => 'required|string|unique:vehicles',
+            'user_id' => 'required|exists:users,id', // Make sure user_id exists in users table
         ]);
+
+
         $vehicle = Vehicle::create($request->all());
-        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' created!');
+
+        return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->registration . ' created and attached to user!');
     }
+
 
     /**
      * Display the specified resource.
@@ -61,16 +85,14 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-
         $request->validate([
             'make' => 'required|string',
             'model' => 'required|string',
             'fuelType' => 'required|string',
-            'registration' => 'required|string|unique:vehicles',
-
+            'registration' => 'required|string|unique:vehicles,registration,' . $vehicle->id,
         ]);
         $vehicle->update($request->all());
-        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' updated!');
+        return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->plate . ' updated!');
     }
 
     /**
@@ -79,6 +101,6 @@ class VehicleController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         $vehicle->delete();
-        return redirect()->route('admin.vehicles.index')->with('status', 'Vehicle ' . $vehicle->plate . ' deleted!');
+        return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->plate . ' deleted!');
     }
 }

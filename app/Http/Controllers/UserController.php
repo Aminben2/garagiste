@@ -96,12 +96,13 @@ class UserController extends Controller
         $request->validate([
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'address' => ['nullable', 'string', 'max:255'],
             'phoneNumber' => ['nullable', 'string', 'max:20'],
             'role' => ['required', 'array', 'exists:roles,id'], // new validation rule
         ]);
+
 
         $user->update([
             'firstName' => $request->input('firstName'),

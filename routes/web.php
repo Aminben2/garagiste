@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,16 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'edit' => 'users.edit',
         'update' => 'users.update',
         'destroy' => 'users.destroy',
+    ]);
+
+    Route::resource('admin/vehicles', VehicleController::class)->names([
+        'index' => 'vehicles',
+        'create' => 'vehicles.create',
+        'store' => 'vehicles.store',
+        'show' => 'vehicle.details',
+        'edit' => 'vehicles.edit',
+        'update' => 'vehicles.update',
+        'destroy' => 'vehicles.destroy',
     ]);
     Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

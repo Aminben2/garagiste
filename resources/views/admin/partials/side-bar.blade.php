@@ -47,6 +47,20 @@
             </ul>
         </li>
 
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"> <i class="lni lni-car-alt"></i>
+                </div>
+                <div class="menu-title">Vehicle management</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>Vehicles</a>
+                </li>
+                <li> <a href="{{ route('vehicles.create') }}"><i class="bx bx-radio-circle"></i>Add Vehicle</a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
     <!--end navigation-->
 </div>
