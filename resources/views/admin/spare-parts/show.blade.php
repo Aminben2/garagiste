@@ -9,8 +9,8 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ $sparePart->partName }}</h4>
                     <div class="d-flex gap-3 py-3">
-                        <div>{{ count($sparePart->invoices) }} in a invice</div>
-                        <div class="text-success"><i class='bx bxs-cart-alt align-middle'></i> 134 orders
+                        <div class="text-success"><i class='bx bxs-cart-alt align-middle'></i>
+                            {{ count($sparePart->repairs) }} used in repairs
                         </div>
                     </div>
                     <div class="mb-3">

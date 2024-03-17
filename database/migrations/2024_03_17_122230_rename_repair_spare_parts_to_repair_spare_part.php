@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('spare_parts', function (Blueprint $table) {
-            $table->string('photo')->nullable();
-        });
+        Schema::rename('repair_spare_parts', 'repair_spare_part');
     }
 
     /**
@@ -21,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('spare_parts', function (Blueprint $table) {
-            $table->dropColumn('photo');
-        });
+        Schema::rename('repair_spare_part', 'repair_spare_parts');
     }
 };
