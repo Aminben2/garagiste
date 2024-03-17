@@ -64,8 +64,7 @@ class VehicleController extends Controller
         if ($request->hasFile('photos')) {
             $photos = [];
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('public/vehicle_photos');
-                $path = str_replace('public/', '', $path); // Remove 'public/' from the path
+                $path = $photo->store('public/vehicle_photos', "public");
                 // Store photo in storage/app/public/vehicle_photos directory
 
                 $photos[] = $path;
@@ -118,8 +117,7 @@ class VehicleController extends Controller
             $existingPhotos = $vehicle->photos ?? []; // Get existing photos
 
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('public/vehicle_photos');
-                $path = str_replace('public/', '', $path); // Remove 'public/' from the path
+                $path = $photo->store('public/vehicle_photos', 'public');
                 $existingPhotos[] = $path; // Add new photo to the array
             }
 

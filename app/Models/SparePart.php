@@ -15,6 +15,7 @@ class SparePart extends Model
         'price',
         "stock",
         "description",
+        "photo",
     ];
 
     public function repairs()

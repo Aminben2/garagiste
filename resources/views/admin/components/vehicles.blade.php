@@ -22,7 +22,7 @@
                             <th>Fuel Type</th>
                             <th>Registration</th>
                             <th>Start Date</th>
-                        </tr>@dd($vehicles)
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($vehicles as $vehicle)

@@ -46,7 +46,7 @@
             </div>
             @if (count($vehicles) > 0)
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table class="table mb-0" id="example">
                         <thead class="table-light">
                             <tr>
                                 <th>Vehicle#</th>

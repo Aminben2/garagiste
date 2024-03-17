@@ -3,7 +3,7 @@
     <div class="card">
         <div class="row g-0">
             <div class="col-md-4 border-end">
-                <img src="assets/images/products/13.png" class="img-fluid" alt="...">
+                <img src="{{ asset('storage/' . $sparePart->photo) }}" class="img-fluid" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body">

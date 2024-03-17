@@ -13,7 +13,20 @@ class SparePartController extends Controller
      */
     public function index()
     {
-        $spareParts = SparePart::all();
+
+        $spareParts = SparePart::query();
+
+        $search = request('search');
+        if ($search) {
+            $spareParts->where(function ($query) use ($search) {
+                $query->where('partName', 'like', '%' . $search . '%')
+                    ->orWhere('partReference', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
+            });
+        }
+
+        $spareParts = $spareParts->get();
+
         return view('admin.spare-parts.index', compact('spareParts'));
     }
 
@@ -30,25 +43,23 @@ class SparePartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'partName' => ['required', 'string', 'max:255'],
-            'partReference' => ['required', 'string', 'max:255'],
-            'supplier' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'numeric'],
-            'stock' => ['required', 'numeric'],
-            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            "description" => ['required', 'string', 'max:255'],
-
+        $data = $request->validate([
+            'partName' => 'required|string|max:255',
+            'partReference' => 'required|string|max:255',
+            'supplier' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            "description" => 'required|string|max:255',
         ]);
 
-        $data = $request->only('partName', 'partReference', 'price', "stock", "supplier", "description");
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('spare-parts');
+            $path = $request->file('photo')->store('spare-parts', 'public');
+            $data['photo'] = $path; // add this line to store the path in the $data array
         }
 
         SparePart::create($data);
-
         return redirect()->route('spare-parts')->with('status', 'Spare part created!');
     }
 
@@ -92,7 +103,8 @@ class SparePartController extends Controller
             }
 
             // Upload new image
-            $data['photo'] = $request->file('photo')->store('spare-parts');
+            $path = $request->file('photo')->store('spare-parts', 'public');
+            $data['photo'] = $path;
         }
 
         $sparePart->update($data);

@@ -42,7 +42,7 @@
             </div>
             @if (count($spareParts) > 0)
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table class="table mb-0" id="example">
                         <thead class="table-light">
                             <tr>
                                 <th>Spare Part#</th>
