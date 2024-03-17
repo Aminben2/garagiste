@@ -34,8 +34,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
-
     /**
      * Get the vehicles for the user.
      */
@@ -49,6 +47,10 @@ class User extends Authenticatable
         return $this->hasMany(Repair::class);
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

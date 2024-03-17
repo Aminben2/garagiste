@@ -35,7 +35,8 @@
         </li>
         <li>
             <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="bx bx-category"></i>
+
+                <div class="parent-icon"><i class="bx bx-user-circle"></i>
                 </div>
                 <div class="menu-title">User management</div>
             </a>
@@ -57,6 +58,19 @@
                 <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>Vehicles</a>
                 </li>
                 <li> <a href="{{ route('vehicles.create') }}"><i class="bx bx-radio-circle"></i>Add Vehicle</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-category"></i>
+                </div>
+                <div class="menu-title">Spare Parts</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('spare-parts') }}"><i class="bx bx-radio-circle"></i>Spare parts</a>
+                </li>
+                <li> <a href="{{ route('spare-parts.create') }}"><i class="bx bx-radio-circle"></i>Add Part</a>
                 </li>
             </ul>
         </li>

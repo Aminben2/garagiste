@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,17 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'edit' => 'vehicles.edit',
         'update' => 'vehicles.update',
         'destroy' => 'vehicles.destroy',
+    ]);
+
+
+    Route::resource('admin/spare-parts', SparePartController::class)->names([
+        'index' => 'spare-parts',
+        'create' => 'spare-parts.create',
+        'store' => 'spare-parts.store',
+        'show' => 'spare-part.details',
+        'edit' => 'spare-parts.edit',
+        'update' => 'spare-parts.update',
+        'destroy' => 'spare-parts.destroy',
     ]);
     Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

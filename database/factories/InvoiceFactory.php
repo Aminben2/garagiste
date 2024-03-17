@@ -20,6 +20,7 @@ class InvoiceFactory extends Factory
         return [
             'additionalCharges' => $this->faker->randomFloat(2, 0, 100),
             'totalAmount' => $this->faker->randomFloat(2, 1, 1000),
+            
         ];
     }
 }

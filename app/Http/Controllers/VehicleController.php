@@ -55,13 +55,28 @@ class VehicleController extends Controller
             'fuelType' => 'required|string',
             'registration' => 'required|string|unique:vehicles',
             'user_id' => 'required|exists:users,id', // Make sure user_id exists in users table
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validation rule for each photo in the array
         ]);
 
+        $vehicleData = $request->except('photos');
+        $vehicle = Vehicle::create($vehicleData);
 
-        $vehicle = Vehicle::create($request->all());
+        if ($request->hasFile('photos')) {
+            $photos = [];
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('public/vehicle_photos');
+                $path = str_replace('public/', '', $path); // Remove 'public/' from the path
+                // Store photo in storage/app/public/vehicle_photos directory
+
+                $photos[] = $path;
+            }
+            $vehicle->photos = $photos; // Append new photos to existing photos
+            $vehicle->save();
+        }
 
         return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->registration . ' created and attached to user!');
     }
+
 
 
     /**
@@ -69,7 +84,8 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-        return view('admin.vehicles.show', compact('vehicle'));
+        $repairs = $vehicle->repairs;
+        return view('admin.vehicles.show', compact('vehicle', "repairs"));
     }
 
     /**
@@ -77,6 +93,8 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
+
+
         return view('admin.vehicles.edit', compact('vehicle'));
     }
 
@@ -90,9 +108,26 @@ class VehicleController extends Controller
             'model' => 'required|string',
             'fuelType' => 'required|string',
             'registration' => 'required|string|unique:vehicles,registration,' . $vehicle->id,
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation rule for each photo in the array
         ]);
-        $vehicle->update($request->all());
-        return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->plate . ' updated!');
+
+        $vehicle->update($request->except('photos')); // Update vehicle attributes
+
+        // Handle photos
+        if ($request->hasFile('photos')) {
+            $existingPhotos = $vehicle->photos ?? []; // Get existing photos
+
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('public/vehicle_photos');
+                $path = str_replace('public/', '', $path); // Remove 'public/' from the path
+                $existingPhotos[] = $path; // Add new photo to the array
+            }
+
+            $vehicle->photos = $existingPhotos; // Update photos attribute
+        }
+
+        $vehicle->save(); // Persist the changes in the database
+        return redirect()->route('vehicles')->with('status', 'Vehicle ' . $vehicle->registration . ' updated!');
     }
 
     /**

@@ -21,6 +21,9 @@ class SparePartFactory extends Factory
             'partReference' => $this->faker->word,
             'supplier' => $this->faker->company,
             'price' => $this->faker->randomFloat(2, 1, 100),
+            'stock' => $this->faker->numberBetween(0, 100),
+            'description' => $this->faker->text(100),
+            'photo' => $this->faker->imageUrl(),
         ];
     }
 }

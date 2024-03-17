@@ -17,6 +17,11 @@ class Vehicle extends Model
         'user_id',
     ];
 
+    protected $casts = [
+        'photos' => 'array', // Cast 'photos' attribute to array
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

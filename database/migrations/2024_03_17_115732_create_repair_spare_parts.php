@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spare_part_invoice', function (Blueprint $table) {
+        Schema::create('repair_spare_parts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('invoice_id');
+            $table->string('quantity');
+            $table->unsignedBigInteger('repair_id');
             $table->unsignedBigInteger('spare_part_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete("cascade");
+            $table->foreign('repair_id')->references('id')->on('repairs')->onDelete("cascade");
             $table->foreign('spare_part_id')->references('id')->on('spare_parts')->onDelete("cascade");
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoice_spare_part');
+        Schema::dropIfExists('repair_spare_parts');
     }
 };

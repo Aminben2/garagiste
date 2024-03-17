@@ -2,23 +2,15 @@
 @section('content')
     <div class="row">
         @if (count($errors) > 0)
-            <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show py-2">
-                <div class="d-flex align-items-center">
-                    <div class="font-35 text-white"><i class='bx bxs-message-square-x'></i>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0 text-white">Danger Alerts</h6>
-                        <div class="text-white">{{ $errors->first() }}</div>
-                    </div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            @component('admin.components.danger-alert', ['errors' => $errors])
+            @endcomponent
         @endif
         <div class="col-xl-6 mx-auto">
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Update Vehicle</h5>
-                    <form class="row g-3" method="post" action="{{ route('vehicles.update', ['vehicle' => $vehicle]) }}">
+                    <form class="row g-3" method="post" action="{{ route('vehicles.update', ['vehicle' => $vehicle]) }}"
+                        enctype="multipart/form-data">
                         <div class="col-md-12">
                             @method('PUT')
                             @csrf
@@ -53,9 +45,13 @@
                                     placeholder="registration" value="{{ $vehicle->registration ?? old('registration') }}">
                             </div>
                         </div>
-
                         <div class="col-md-12">
+                            <label for="photos" class="form-label">Photos</label>
+                            <div class="input-group">
+                                <input name="photos[]" type="file" class="form-control" id="photos" multiple>
+                            </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="d-md-flex d-grid align-items-center gap-3">
                                 <button type="submit" class="btn btn-primary px-4">Submit</button>

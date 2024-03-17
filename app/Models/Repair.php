@@ -20,18 +20,25 @@ class Repair extends Model
         'vehicle_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
 
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function invoices()
+    public function mechanic()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function spareParts()
+    {
+        return $this->belongsToMany(SparePart::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
     }
 }
