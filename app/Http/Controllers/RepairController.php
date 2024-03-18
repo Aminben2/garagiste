@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRepairRequest;
-use App\Http\Requests\UpdateRepairRequest;
 use App\Models\Repair;
+use Illuminate\Http\Request;
 
 class RepairController extends Controller
 {
@@ -27,7 +26,7 @@ class RepairController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRepairRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -51,7 +50,7 @@ class RepairController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepairRequest $request, Repair $repair)
+    public function update(Request $request, Repair $repair)
     {
         //
     }

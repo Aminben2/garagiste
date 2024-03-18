@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('partReference');
             $table->string('supplier');
             $table->decimal('price', 10, 2);
+            $table->string('photo')->nullable(); //add photo column
             $table->timestamps();
         });
     }

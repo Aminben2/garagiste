@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('fuelType');
             $table->string('registration');
-            $table->string('photos')->nullable();
+            $table->json('photos')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

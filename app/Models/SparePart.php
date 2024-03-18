@@ -13,10 +13,13 @@ class SparePart extends Model
         'partReference',
         'supplier',
         'price',
+        "stock",
+        "description",
+        "photo",
     ];
 
-    public function invoice()
+    public function repairs()
     {
-        return $this->belongsToMany(Repair::class);
+        return $this->belongsToMany(Repair::class)->withPivot('quantity');
     }
 }

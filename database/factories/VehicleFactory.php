@@ -22,7 +22,13 @@ class VehicleFactory extends Factory
             'model' => $this->faker->word,
             'fuelType' => $this->faker->word,
             'registration' => $this->faker->unique()->regexify('[A-Z]{2}[0-9]{4}[A-Z]{2}'), // Change to a valid vehicle registration
-            'photos' => null,
+            'photos' => $this->faker->randomElements([
+                $this->faker->imageUrl(),
+                $this->faker->imageUrl(),
+                $this->faker->imageUrl(),
+                $this->faker->imageUrl(),
+                $this->faker->imageUrl(),
+            ], $this->faker->numberBetween(1, 5)),
         ];
     } // You may add logic to generate or link photos here
 }

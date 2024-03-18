@@ -61,23 +61,25 @@ class DatabaseSeeder extends Seeder
         $repairs = \App\Models\Repair::all();
 
 
-        \App\Models\Invoice::factory()->count(50)->create()->each(function ($invoice) use ($repairs) {
+        \App\Models\Invoice::factory()->count(50)->create()->each(function ($invoice) use ($repairs, $users) {
             $randomRepair = $repairs->random(1)[0];
+            $randomUser = $users->random(1)[0];
 
             $invoice->repair_id = $randomRepair->id;
+            $invoice->user_id = $randomUser->id;
             $invoice->save();
         });
         $spareParts = \App\Models\SparePart::all();
 
 
-        \App\Models\Invoice::all()->each(function ($invoice) use ($spareParts) {
+        $repairs->each(function ($repair) use ($spareParts) {
+            $sparePartsToAdd = $spareParts->random(rand(0, $spareParts->count()));
 
-            $spartPartId = $spareParts->random(1)[0];
+            $pivotData = $sparePartsToAdd->mapWithKeys(function ($sparePart) {
+                return [$sparePart->id => ['quantity' => rand(1, 100)]];
+            });
 
-            DB::table('spare_part_invoice')->insert([
-                'spare_part_id' => $spartPartId->id,
-                'invoice_id' => $invoice->id,
-            ]);
+            $repair->spareParts()->syncWithoutDetaching($pivotData);
         });
     }
 }

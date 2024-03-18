@@ -1,0 +1,88 @@
+<header>
+    <div class="topbar d-flex align-items-center">
+        <nav class="navbar navbar-expand gap-3">
+            <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+            </div>
+            <div class="top-menu ms-auto">
+                <ul class="navbar-nav align-items-center gap-1">
+
+                    <li class="nav-item dropdown dropdown-laungauge d-none d-sm-flex">
+                        <div class="gtranslate_wrapper"></div>
+                    </li>
+                    <li class="nav-item dark-mode d-none d-sm-flex">
+                        <a class="nav-link dark-mode-icon" href="javascript:;"><i class='bx bx-moon'></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown dropdown-large">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
+                            data-bs-toggle="dropdown"><span class="alert-count">7</span>
+                            <i class='bx bx-bell'></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="javascript:;">
+                                <div class="msg-header">
+                                    <p class="msg-header-title">Notifications</p>
+                                    <p class="msg-header-badge">8 New</p>
+                                </div>
+                            </a>
+                            <div class="header-notifications-list">
+                                <a class="dropdown-item" href="javascript:;">
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-online">
+                                            <img src="{{ asset('assets/images/avatars/avatar-1.png') }}"
+                                                class="msg-avatar" alt="user avatar">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="msg-name">Daisy Anderson<span class="msg-time float-end">5 sec
+                                                    ago</span></h6>
+                                            <p class="msg-info">The standard chunk of lorem</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <a href="javascript:;">
+                                <div class="text-center msg-footer">
+                                    <button class="btn btn-primary w-100">View All Notifications</button>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="user-box dropdown px-3">
+                <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
+                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-user text-primary">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <div class="user-info">
+                        <p class="user-name mb-0">{{ Auth::user()->firstName }}</p>
+                        <p class="designattion mb-0">{{ Auth::user()->lastName }}</p>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile.edit') }}"><i
+                                class="bx bx-user fs-5"></i><span>Profile</span></a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"
+                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            <i class="bx bx-log-out-circle"></i><span>Logout</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

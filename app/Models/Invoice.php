@@ -15,13 +15,13 @@ class Invoice extends Model
         'totalAmount',
     ];
 
+    public function client()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function repair()
     {
         return $this->belongsTo(Repair::class);
-    }
-
-    public function spareParts()
-    {
-        return $this->belongsToMany(SparePart::class);
     }
 }
