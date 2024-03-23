@@ -42,6 +42,13 @@
 @extends('layouts.guest')
 @section('content')
     <div class="wrapper">
+        @if (!empty(session('status')))
+            @component('admin.components.seccuss-alert', [
+                'title' => __('Success Alerts'),
+                'subTitle' => session('status'),
+            ])
+            @endcomponent
+        @endif
         <div class="section-authentication-cover">
             <div class="">
                 <div class="row g-0">
@@ -70,16 +77,34 @@
                                     </div>
                                     <form method="POST" action="{{ route('password.update') }}">
                                         @csrf
+                                        @method('PUT')
                                         <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                                        <div class="mb-3 mt-4">
+                                            <label class="form-label">{{ __('Email') }}</label>
+                                            <input type="email" class="form-control" name="email"
+                                                placeholder="{{ __('Email') }}" required
+                                                value="{{ old('email', $request->email) }}" autofocus
+                                                autocomplete="username" />
+                                            @error('email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="mb-3 mt-4">
                                             <label class="form-label">{{ __('New Password') }}</label>
                                             <input type="password" class="form-control" name="password"
                                                 placeholder="{{ __('Enter new password') }}" required />
+                                            @error('password')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">{{ __('Confirm Password') }}</label>
                                             <input type="password" class="form-control" name="password_confirmation"
                                                 placeholder="{{ __('Confirm password') }}" required />
+                                            @error('password_confirmation')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="d-grid gap-2">
                                             <button type="submit"
@@ -97,4 +122,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection('content')

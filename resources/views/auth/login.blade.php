@@ -53,6 +53,13 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="">
         <div class="wrapper">
+            @if (!empty(session('status')))
+                @component('admin.components.seccuss-alert', [
+                    'title' => __('Success Alerts'),
+                    'subTitle' => session('status'),
+                ])
+                @endcomponent
+            @endif
             <div class="section-authentication-cover">
                 <div class="">
                     <div class="row g-0">
