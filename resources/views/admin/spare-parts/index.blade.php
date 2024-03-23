@@ -11,6 +11,7 @@
             ])
             @endcomponent
         @endif
+
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
                 <div class="position-relative">
@@ -60,8 +61,8 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <input class="form-check-input me-3" type="checkbox" value=""
-                                                    aria-label="...">
+                                                <input class="form-check-input me-3" type="checkbox" aria-label="..."
+                                                    name="items[]" value="{{ $s->id }}">
                                             </div>
                                             <div class="ms-2">
                                                 <h6 class="mb-0 font-14">{{ $s->id }}</h6>
@@ -136,4 +137,6 @@
             window.location.href = "{{ route('spare-parts') }}"; // Redirect to the same route to clear the search query
         }
     </script>
+
+
 @endsection

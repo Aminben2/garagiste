@@ -120,4 +120,20 @@ class SparePartController extends Controller
         $sparePart->delete();
         return redirect()->route('spare-parts')->with('status', 'Spare part deleted!');
     }
+
+
+    public function deleteSelected(Request $request)
+    {
+        dd($request->ids);
+        // Validate the request
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:spare_parts,id',
+        ]);
+        // Delete the selected items
+        SparePart::destroy($request->items);
+
+        // Optionally, you can return a response here or redirect to a page
+        return redirect()->route('spare-parts')->with('status', 'Selected items have been deleted successfully.');
+    }
 }

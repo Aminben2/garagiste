@@ -28,6 +28,13 @@
 @extends('layouts.guest')
 @section('content')
     <div class="wrapper">
+        @if (!empty(session('status')))
+            @component('admin.components.seccuss-alert', [
+                'title' => __('Success Alerts'),
+                'subTitle' => session('status'),
+            ])
+            @endcomponent
+        @endif
         <div class="section-authentication-cover">
             <div class="">
                 <div class="row g-0">
@@ -63,6 +70,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+
                                             <div class="d-grid gap-2">
                                                 <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
                                                 <a href="{{ route('login') }}" class="btn btn-light"><i
@@ -78,5 +86,17 @@
                 <!--end row-->
             </div>
         </div>
+        <script>
+            // Smoothly show the success alert
+            document.getElementById('successAlert').style.opacity = 1;
+
+            // Smoothly hide the success alert after 5 seconds
+            setTimeout(function() {
+                document.getElementById('successAlert').style.opacity = 0;
+                setTimeout(function() {
+                    document.getElementById('successAlert').style.display = 'none';
+                }, 500);
+            }, 5000);
+        </script>
     </div>
 @endsection

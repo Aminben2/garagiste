@@ -60,6 +60,7 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'update' => 'spare-parts.update',
         'destroy' => 'spare-parts.destroy',
     ]);
+
     Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
