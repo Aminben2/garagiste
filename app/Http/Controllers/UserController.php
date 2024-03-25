@@ -30,7 +30,7 @@ class UserController extends Controller
 
         return view('admin.users.index', compact('users', 'searchTerm'));
     }
-
+  
     /**
      * Show the form for creating a new resource.
      */
@@ -123,9 +123,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-
-
-
         $user->delete();
         return redirect()->route('users')->with('status', 'User ' . $user->username . ' deleted!');
     }

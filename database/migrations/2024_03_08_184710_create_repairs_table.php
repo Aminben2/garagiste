@@ -19,12 +19,14 @@ return new class extends Migration
             $table->dateTime('endDate')->nullable();
             $table->text('mechanicNotes')->nullable();
             $table->text('clientNotes')->nullable();
-
+            $table->decimal('workPrice', 10, 2);
+            $table->integer("hours")->nullable();
+            $table->decimal('hourPrice', 10, 2);
             $table->unsignedBigInteger('vehicle_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('invoice_id')->nullable();
 
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
 
             $table->timestamps();
         });

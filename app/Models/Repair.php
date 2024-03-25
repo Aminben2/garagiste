@@ -39,6 +39,6 @@ class Repair extends Model
 
     public function invoice()
     {
-        return $this->hasOne(Invoice::class);
+        return $this->belongsTo(Invoice::class);
     }
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('supplier');
             $table->decimal('price', 10, 2);
             $table->string('photo')->nullable(); //add photo column
+            $table->integer("stock")->default(0);
+            $table->longText("description")->nullable();
             $table->timestamps();
         });
     }

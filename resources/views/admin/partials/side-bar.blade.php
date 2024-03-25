@@ -41,7 +41,9 @@
                 <div class="menu-title">User management</div>
             </a>
             <ul>
-                <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>Users</a>
+                <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>All users</a>
+                </li>
+                <li> <a href="{{ route('clients') }}"><i class="bx bx-radio-circle"></i>Clients</a>
                 </li>
                 <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>Add user</a>
                 </li>

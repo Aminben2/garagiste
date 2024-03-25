@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('repair_id')->nullable();
-            $table->foreign('repair_id')->references('id')->on('repairs')->onDelete("cascade");
             $table->decimal('additionalCharges', 10, 2)->nullable();
             $table->decimal('totalAmount', 10, 2);
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->date("dueDate")->nullable();
+            $table->longText("description")->nullable();
+            $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();
         });
     }

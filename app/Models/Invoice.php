@@ -20,8 +20,8 @@ class Invoice extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function repair()
+    public function repairs()
     {
-        return $this->belongsTo(Repair::class);
+        return $this->hasMany(Repair::class);
     }
 }

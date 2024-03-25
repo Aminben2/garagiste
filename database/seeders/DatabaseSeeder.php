@@ -3,10 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Invoice;
+use App\Models\Repair;
 use App\Models\Role;
+use App\Models\SparePart;
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,40 +40,37 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
             $user->vehicles()->saveMany(
-                \App\Models\Vehicle::factory()->count(rand(0, 3))->make()
+                Vehicle::factory()->count(rand(0, 3))->make()
             );
         }
 
 
 
-        \App\Models\Repair::factory()->count(200)->create()->each(function ($repair) use ($users) {
+        Invoice::factory()->count(200)->create()->each(function ($invoice) use ($users) {
             $randomUser = $users->random(1)[0];
-
-            if ($randomUser->vehicles->count() != 0) {
-                $repair->user_id = $randomUser->id;
-                $repair->vehicle_id = $randomUser->vehicles->random(1)[0]->id;
-                $repair->save();
-            }
+            $invoice->user_id = $randomUser->id;
+            $invoice->save();
         });
 
         $users = \App\Models\User::all();
 
 
-        \App\Models\SparePart::factory()->count(100)->create();
+        SparePart::factory()->count(100)->create();
 
-        $repairs = \App\Models\Repair::all();
+        $invoices = Invoice::all();
+        $cars = Vehicle::all();
 
+        Repair::factory()->count(50)->create()->each(function ($repair) use ($invoices, $cars) {
+            $randomInvoice = $invoices->random();
+            $randomCar = $cars->random();
 
-        \App\Models\Invoice::factory()->count(50)->create()->each(function ($invoice) use ($repairs, $users) {
-            $randomRepair = $repairs->random(1)[0];
-            $randomUser = $users->random(1)[0];
-
-            $invoice->repair_id = $randomRepair->id;
-            $invoice->user_id = $randomUser->id;
-            $invoice->save();
+            $repair->invoice_id = $randomInvoice->id;
+            $repair->vehicle_id = $randomCar->id;
+            $repair->save();
         });
-        $spareParts = \App\Models\SparePart::all();
+        $spareParts = SparePart::all();
 
+        $repairs = Repair::all();
 
         $repairs->each(function ($repair) use ($spareParts) {
             $sparePartsToAdd = $spareParts->random(rand(0, $spareParts->count()));

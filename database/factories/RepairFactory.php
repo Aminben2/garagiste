@@ -25,6 +25,9 @@ class RepairFactory extends Factory
             'endDate' => $this->faker->dateTimeBetween($min = '-1 year', $max = 'now', $timezone = null),
             'mechanicNotes' => $this->faker->paragraph(),
             'clientNotes' => $this->faker->paragraph(),
+            "hourPrice" => $this->faker->randomFloat(2, 1000, 10000),
+            "hours" => $this->faker->randomNumber(),
+            "workPrice" => $this->faker->randomFloat(2, 1000, 10000),
         ];
     }
 }

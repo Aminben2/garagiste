@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
@@ -28,8 +28,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', "isClient"])->group(function () {
-
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
+    Route::get("/admin/users/clients", [ClientController::class, "index"])->name("clients");
+    Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "show"])->name("client.invoices");
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',
         'create' => 'users.create',
@@ -61,6 +62,16 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'destroy' => 'spare-parts.destroy',
     ]);
 
+    Route::resource('admin/invoices', VehicleController::class)->names([
+        'index' => 'invoices',
+        'create' => 'invoices.create',
+        'store' => 'invoices.store',
+        'show' => 'invoice.details',
+        'edit' => 'invoices.edit',
+        'update' => 'invoices.update',
+        'destroy' => 'invoices.destroy',
+    ]);
+
     Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -72,11 +83,11 @@ require __DIR__ . '/auth.php';
 
 
 // Route for handling 404 error (Page Not Found)
-// Route::fallback(function () {
-//     return response()->view('errors.404', [], 404);
-// });
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
 // Route for handling 500 error (Internal Server Error)
-// Route::get('/error', function () {
-//     return response()->view('errors.500', [], 500);
-// });
+Route::get('/error', function () {
+    return response()->view('errors.500', [], 500);
+});
