@@ -16,40 +16,22 @@
             @endcomponent
         @endif
         <div class="card-body">
-            <div class="d-lg-flex align-items-center mb-4 gap-3">
-                <div class="position-relative">
-                    <form method="GET" action="{{ route('clients') }}">
-                        <input type="text" name="search" class="form-control ps-5 radius-30" placeholder="Search User"
-                            value="{{ request()->input('search') }}">
-                        <button type="submit" class="d-none"></button> <!-- to submit the form -->
-                        <span class="position-absolute top-50 product-show translate-middle-y"><i
-                                class="bx bx-search"></i></span>
-                        @if (request()->filled('search'))
-                            <!-- Check if search query exists -->
-                            <button type="button"
-                                class="position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent me-1"
-                                onclick="window.location.href ='{{ route('client.invoices', ['client' => $client]) }}'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-x text-primary">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        @endif
-                    </form>
-                </div>
-            </div>
+            @component('admin.components.search-bar', [
+                'route' => route('client.invoices', ['client' => $client]),
+                'searchItem' => 'invoice',
+            ])
+            @endcomponent
             @if (count($invoices) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">
                         <thead class="table-light">
                             <tr>
                                 <th>Ivoice#</th>
-                                <th>Repair Id</th>
+                                <th>Repair count</th>
                                 <th>Additional Charge</th>
                                 <th>Total Amount</th>
                                 <th>Created at</th>
+                                <th>View Repairs</th>
                                 <th>View Details</th>
                                 <th>Actions</th>
                             </tr>
@@ -68,10 +50,14 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $invoice->repair->id }}</td>
+                                    <td>{{ count($invoice->repairs) == 0 ? '-' : count($invoice->repairs) }}</td>
                                     <td>{{ $invoice->additionalCharges }}</td>
                                     <td>{{ $invoice->totalAmount }}</td>
                                     <td>{{ $invoice->updated_at }}</td>
+                                    <td>
+                                        <a href="{{ route('invoice.repairs', ['invoice' => $invoice]) }}"
+                                            class="btn btn-primary btn-sm radius-30 px-4">View</a>
+                                    </td>
                                     <td>
                                         <a href="{{ route('invoice.details', ['invoice' => $invoice]) }}"
                                             class="btn btn-primary btn-sm radius-30 px-4">View</a>

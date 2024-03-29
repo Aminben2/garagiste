@@ -30,7 +30,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', "isClient"])->group(function () {
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
     Route::get("/admin/users/clients", [ClientController::class, "index"])->name("clients");
-    Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "show"])->name("client.invoices");
+    Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "clientInvoices"])->name("client.invoices");
+    Route::get("/admin/users/clients/{invoice}/repairs", [ClientController::class, "clientInvoiceRepairs"])->name("invoice.repairs");
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',
         'create' => 'users.create',
@@ -72,12 +73,21 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'destroy' => 'invoices.destroy',
     ]);
 
-    Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    Route::resource('admin/repairs', UserController::class)->names([
+        'index' => 'repairs',
+        'create' => 'repairs.create',
+        'store' => 'repairs.store',
+        'show' => 'repair.details',
+        'edit' => 'repairs.edit',
+        'update' => 'repairs.update',
+        'destroy' => 'repairs.destroy',
+    ]);
 
+    Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
+});
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware("auth");
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware("auth");
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware("auth");
 
 require __DIR__ . '/auth.php';
 

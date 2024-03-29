@@ -20,7 +20,7 @@ class RedirectIfClient
             // Check if the user has the 'client' role among their roles
             if (!auth()->user()->roles->contains('name', 'admin')) {
                 // Redirect them away from admin area
-                return redirect('/'); // Change this to your desired redirect route
+                return redirect('/dashboard'); // Change this to your desired redirect route
             }
         }
 
