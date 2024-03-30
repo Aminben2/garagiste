@@ -25,11 +25,10 @@
                 @component('admin.components.search-bar', ['route' => route('vehicles'), 'searchItem' => 'vehicle'])
                 @endcomponent
                 <div class="ms-auto">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleLargeModal">Add New Vehicle
+                    <button type="button" class="btn btn-primary  radius-30 mt-2 mt-lg-0" data-bs-toggle="modal"
+                        data-bs-target="#exampleLargeModal"><i class="bx bxs-plus-square"></i>Add New Vehicle
                     </button>
                 </div>
-
             </div>
             @if (count($vehicles) > 0)
                 <div class="table-responsive">

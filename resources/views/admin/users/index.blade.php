@@ -12,8 +12,15 @@
             @endcomponent
         @endif
         <div class="card-body">
-            @component('admin.components.search-bar', ['route' => route('users'), 'searchItem' => 'user'])
-            @endcomponent
+            <div class="d-lg-flex align-items-center mb-4 gap-3">
+                @component('admin.components.search-bar', ['route' => route('users'), 'searchItem' => 'user'])
+                @endcomponent
+                <div class="ms-auto">
+                    <a href="{{ route('invoices.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
+                            class="bx bxs-plus-square"></i>Add New
+                        User</a>
+                </div>
+            </div>
             @if (count($users) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">
@@ -82,7 +89,8 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title"
-                                                                    id="exampleModalLabel{{ $user->id }}">Modal title
+                                                                    id="exampleModalLabel{{ $user->id }}">Modal
+                                                                    title
                                                                 </h5>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
@@ -114,6 +122,6 @@
                     <div class="text-white">There are no users!</div>
                 </div>
             @endif
+            </>
         </div>
-    </div>
-@endsection
+    @endsection

@@ -16,8 +16,15 @@
             @endcomponent
         @endif
         <div class="card-body">
-            @component('admin.components.search-bar', ['route' => route('clients'), 'searchItem' => 'client'])
-            @endcomponent
+            <div class="d-lg-flex align-items-center mb-4 gap-3">
+                @component('admin.components.search-bar', ['route' => route('clients'), 'searchItem' => 'Client'])
+                @endcomponent
+                <div class="ms-auto">
+                    <a href="{{ route('users.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
+                            class="bx bxs-plus-square"></i>Add New
+                        Client</a>
+                </div>
+            </div>
             @if (count($clients) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">

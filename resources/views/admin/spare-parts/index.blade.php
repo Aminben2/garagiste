@@ -13,8 +13,15 @@
         @endif
 
         <div class="card-body">
-            @component('admin.components.search-bar', ['route' => route('spare-parts'), 'searchItem' => 'Part'])
-            @endcomponent
+            <div class="d-lg-flex align-items-center mb-4 gap-3">
+                @component('admin.components.search-bar', ['route' => route('spare-parts'), 'searchItem' => 'Part'])
+                @endcomponent
+                <div class="ms-auto">
+                    <a href="{{ route('spare-parts.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
+                            class="bx bxs-plus-square"></i>Add New
+                        Part</a>
+                </div>
+            </div>
             @if (count($spareParts) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">
