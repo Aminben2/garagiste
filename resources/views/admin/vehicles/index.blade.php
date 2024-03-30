@@ -15,9 +15,22 @@
             ])
             @endcomponent
         @endif
-        <div class="card-body">
-            @component('admin.components.search-bar', ['route' => route('vehicles'), 'searchItem' => 'vehicle'])
+        @if (count($errors) > 0)
+            @component('admin.components.danger-alert', ['errors' => $errors])
             @endcomponent
+        @endif
+        <div class="card-body">
+            @include('admin.vehicles.create')
+            <div class="d-lg-flex align-items-center mb-4 gap-3">
+                @component('admin.components.search-bar', ['route' => route('vehicles'), 'searchItem' => 'vehicle'])
+                @endcomponent
+                <div class="ms-auto">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleLargeModal">Add New Vehicle
+                    </button>
+                </div>
+
+            </div>
             @if (count($vehicles) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">

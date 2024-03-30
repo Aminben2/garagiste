@@ -13,7 +13,6 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        // $vehicles = Vehicle::all();
 
         $vehicles = Vehicle::query();
 
@@ -30,8 +29,9 @@ class VehicleController extends Controller
         }
 
         $vehicles = $vehicles->get();
+        $users = User::all();
 
-        return view('admin.vehicles.index', compact('vehicles'));
+        return view('admin.vehicles.index', compact('vehicles', 'users'));
     }
 
     /**
