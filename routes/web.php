@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RepairController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -64,7 +66,7 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'destroy' => 'spare-parts.destroy',
     ]);
 
-    Route::resource('admin/invoices', VehicleController::class)->names([
+    Route::resource('admin/invoices', InvoiceController::class)->names([
         'index' => 'invoices',
         'create' => 'invoices.create',
         'store' => 'invoices.store',
@@ -74,7 +76,7 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'destroy' => 'invoices.destroy',
     ]);
 
-    Route::resource('admin/repairs', UserController::class)->names([
+    Route::resource('admin/repairs', RepairController::class)->names([
         'index' => 'repairs',
         'create' => 'repairs.create',
         'store' => 'repairs.store',

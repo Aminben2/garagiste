@@ -76,6 +76,16 @@
                 </li>
             </ul>
         </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-receipt"></i></div>
+                <div class="menu-title">Invoices</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('invoices') }}"><i class="bx bx-radio-circle"></i> Invoices</a></li>
+                <li><a href="{{ route('invoices.create') }}"><i class="bx bx-radio-circle"></i> Add Invoice</a></li>
+            </ul>
+        </li>
 
     </ul>
     <!--end navigation-->
