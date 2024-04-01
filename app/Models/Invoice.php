@@ -13,9 +13,11 @@ class Invoice extends Model
         'repair_id',
         'additionalCharges',
         'totalAmount',
+        "dueDate",
+        "user_id"
     ];
 
-    public function client()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

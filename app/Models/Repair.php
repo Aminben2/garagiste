@@ -18,6 +18,7 @@ class Repair extends Model
         'clientNotes',
         'mechanic_id',
         'vehicle_id',
+        "title"
     ];
 
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -22,7 +22,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        
+        $users = User::all();
+        return view("admin.invoices.create", compact("users"));
     }
 
     /**
@@ -30,7 +31,16 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "description" => ['required', 'string', 'max:255'],
+            "totalAmount" => ['required', 'numeric'],
+            "additionalCharge" => ['required', 'numeric'],
+            "dueDate" => ["required", "date"],
+            "user_id" => ["required", "exists:users,id"],
+        ]);
+
+        $invoice = Invoice::create($request->all());
+        return redirect()->back()->with("success", "Invoice created successfully");
     }
 
     /**
@@ -38,7 +48,8 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        $repairs = $invoice->repairs;
+        return view("admin.invoices.show", compact("invoice", "repairs"));
     }
 
     /**
@@ -46,7 +57,8 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        $users = User::all();
+        return view("admin.invoices.edit", compact("invoice", "users"));
     }
 
     /**
@@ -54,14 +66,23 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
-    }
+        $request->validate([
+            "description" => ['required', 'string', 'max:255'],
+            "totalAmount" => ['required', 'numeric'],
+            "additionalCharge" => ['required', 'numeric'],
+            "dueDate" => ["required", "date"],
+            "user_id" => ["required", "exists:users,id"],
+        ]);
 
+        $invoice->update($request->all());
+        return redirect()->back()->with("success", "Invoice updated successfully");
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        Invoice::destroy($invoice->id);
+        return redirect()->back()->with("success", "Invoice deleted successfully");
     }
 }

@@ -23,12 +23,12 @@
                                 <div class="col company-details">
                                     <h2 class="name">
                                         <a href="javascript:;">
-                                            Arboshiki
+                                            {{ env('APP_NAME') }}
                                         </a>
                                     </h2>
                                     <div>455 Foggy Heights, AZ 85004, US</div>
                                     <div>(123) 456-789</div>
-                                    <div>company@example.com</div>
+                                    <div>garagiste@example.com</div>
                                 </div>
                             </div>
                         </header>
@@ -36,15 +36,16 @@
                             <div class="row contacts">
                                 <div class="col invoice-to">
                                     <div class="text-gray-light">INVOICE TO:</div>
-                                    <h2 class="to">John Doe</h2>
-                                    <div class="address">796 Silver Harbour, TX 79273, US</div>
-                                    <div class="email"><a href="mailto:john@example.com">john@example.com</a>
+                                    <h2 class="to">{{ $invoice->user->firstName }} {{ $invoice->user->lastName }}
+                                    </h2>
+                                    <div class="address">{{ $invoice->user->address }}</div>
+                                    <div class="email"><a href="mailto:john@example.com">{{ $invoice->user->email }}</a>
                                     </div>
                                 </div>
                                 <div class="col invoice-details">
                                     <h1 class="invoice-id">INVOICE {{ $invoice->id }}</h1>
                                     <div class="date">Date of Invoice: {{ $invoice->created_at }}</div>
-                                    <div class="date">Due Date: 30/10/2018</div>
+                                    <div class="date">Due Date: {{ $invoice->dueDate }}</div>
                                 </div>
                             </div>
                             <table>
@@ -59,66 +60,38 @@
                                 </thead>
                                 <tbody>
                                     {{-- Repairs --}}
-                                    <tr>
-                                        <td class="no">04</td>
-                                        <td class="text-left">
-                                            <h3>
-                                                <a href="javascript:;">
-                                                    Youtube channel
-                                                </a>
-                                            </h3>
-                                            <a href="javascript:;">
-                                                Useful videos
-                                            </a> to improve your Javascript skills. Subscribe and stay tuned :)
-                                        </td>
-                                        <td class="unit">$0.00</td>
-                                        <td class="qty">100</td>
-                                        <td class="total">$0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">01</td>
-                                        <td class="text-left">
-                                            <h3>Website Design</h3>Creating a recognizable design solution based on the
-                                            company's existing visual identity
-                                        </td>
-                                        <td class="unit">$40.00</td>
-                                        <td class="qty">30</td>
-                                        <td class="total">$1,200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">02</td>
-                                        <td class="text-left">
-                                            <h3>Website Development</h3>Developing a Content Management System-based Website
-                                        </td>
-                                        <td class="unit">$40.00</td>
-                                        <td class="qty">80</td>
-                                        <td class="total">$3,200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">03</td>
-                                        <td class="text-left">
-                                            <h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)
-                                        </td>
-                                        <td class="unit">$40.00</td>
-                                        <td class="qty">20</td>
-                                        <td class="total">$800.00</td>
-                                    </tr>
+                                    @foreach ($repairs as $r)
+                                        <tr>
+                                            <td class="no">{{ $r->id }}</td>
+                                            <td class="text-left">
+                                                <h3 style="display: block">
+                                                    <a href="{{ route('repair.details', ['repair' => $r]) }}">
+                                                        {{ $r->title }}
+                                                    </a>
+                                                </h3>
+                                                {{ $r->description }}
+                                            </td>
+                                            <td class="unit">{{ $r->hourPrice }}</td>
+                                            <td class="qty">{{ $r->hours }}</td>
+                                            <td class="total">{{ $r->hourPrice * $r->hours }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">SUBTOTAL</td>
-                                        <td>$5,200.00</td>
+                                        <td>{{ $invoice->totalAmount }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">TAX 25%</td>
-                                        <td>$1,300.00</td>
+                                        <td>{{ $invoice->additionalCharges }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">GRAND TOTAL</td>
-                                        <td>$6,500.00</td>
+                                        <td>{{ $invoice->additionalCharges + $invoice->totalAmount }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
