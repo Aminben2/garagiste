@@ -24,6 +24,12 @@
                             class="bx bxs-plus-square"></i>Add New
                         Client</a>
                 </div>
+                @component('admin.components.import-export-modal', [
+                    'importRoute' => route('users.import'),
+                    'title' => 'Users',
+                    'exportRoute' => route('users.export'),
+                ])
+                @endcomponent
             </div>
             @if (count($clients) > 0)
                 <div class="table-responsive">

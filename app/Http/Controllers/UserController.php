@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -17,20 +17,23 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $searchTerm = $request->input('search');
-
-        $usersQuery = User::query();
-
-        if ($searchTerm) {
-            $usersQuery
-                ->where('username', 'LIKE', "%{$searchTerm}%")
-                ->orWhere('email', 'LIKE', "%{$searchTerm}%");
+        if ($request->wantsJson() && $searchTerm) {
+            $users = User::where('username', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('email', 'LIKE', "%{$searchTerm}%")
+                ->limit(10)
+                ->get();
+            return response()->json($users);
         }
 
+        $usersQuery = User::query();
         $users = $usersQuery->get();
 
         return view('admin.users.index', compact('users', 'searchTerm'));
     }
-  
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -38,6 +41,14 @@ class UserController extends Controller
     {
         return view('admin.users.create');
     }
+
+    public function import()
+    {
+        Excel::import(new UsersImport, request()->file('file'));
+        return back();
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

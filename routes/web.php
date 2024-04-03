@@ -34,6 +34,8 @@ Route::middleware(['auth', "isClient"])->group(function () {
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
     Route::get("/admin/users/clients", [ClientController::class, "index"])->name("clients");
     Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "clientInvoices"])->name("client.invoices");
+    Route::get('/admin/users/users-export', [UserController::class, 'export'])->name('users.export');
+    Route::post('/admin/users/users-import', [UserController::class, 'import'])->name('users.import');
     Route::get("/admin/users/clients/{invoice}/repairs", [ClientController::class, "clientInvoiceRepairs"])->name("invoice.repairs");
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',

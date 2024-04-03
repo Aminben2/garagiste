@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use App\Imports\ClientsImport;
+use App\Imports\UsersImport;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
 {
@@ -27,7 +31,15 @@ class ClientController extends Controller
         $clients = $usersQuery->get();
         return view('admin.users.clients.index', compact('clients', 'searchTerm'));
     }
-
+    public function import()
+    {
+        Excel::import(new UsersImport, request()->file('file'));
+        return back();
+    }
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'clients.xlsx');
+    }
     public function clientInvoices(User $client)
     {
         $invoices = $client->invoices;

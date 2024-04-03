@@ -1,6 +1,5 @@
 @extends('admin.index')
 @section('content')
-
     @component('admin.components.break-crump', ['title' => 'User Management', 'page' => 'Users', 'subpage' => ''])
     @endcomponent
     <div class="card">
@@ -20,6 +19,12 @@
                             class="bx bxs-plus-square"></i>Add New
                         User</a>
                 </div>
+                @component('admin.components.import-export-modal', [
+                    'importRoute' => route('users.import'),
+                    'title' => 'Users',
+                    'exportRoute' => route('users.export'),
+                ])
+                @endcomponent
             </div>
             @if (count($users) > 0)
                 <div class="table-responsive">
@@ -35,7 +40,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="userTableBody">
                             @foreach ($users as $user)
                                 <tr>
                                     <td>
@@ -77,51 +82,28 @@
                                                 class="ms-3 d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal{{ $user->id }}" class="btn p-0">
+                                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    onclick="setDeleteFormAction('{{ route('users.destroy', ['user' => $user]) }}')"
+                                                    class="btn p-0">
                                                     <i class="bx bxs-trash text-danger"></i>
                                                 </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal{{ $user->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel{{ $user->id }}"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="exampleModalLabel{{ $user->id }}">Modal
-                                                                    title
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">Are you sure you want to delete this
-                                                                user?</div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">delete</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </form>
-
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
-
-
                         </tbody>
                     </table>
+                    @component('admin.components.delete-modal')
+                    @endcomponent
                 </div>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
                     <div class="text-white">There are no users!</div>
                 </div>
             @endif
-            </>
+
         </div>
-    @endsection
+    </div>
+
+@endsection
