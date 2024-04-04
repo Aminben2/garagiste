@@ -44,8 +44,12 @@ class UserController extends Controller
 
     public function import()
     {
-        Excel::import(new UsersImport, request()->file('file'));
-        return back();
+        if (request()->hasFile('file')) {
+            Excel::import(new UsersImport, request()->file('file'));
+            return back()->with('status', 'Users imported successfully!');
+        } else {
+            return back()->with('status', 'Please select a file to import.');
+        }
     }
 
 

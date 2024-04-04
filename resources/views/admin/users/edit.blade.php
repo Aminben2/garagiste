@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Update User</h5>
-                    <form class="row g-3" method="post" action="{{ route('users.update', ['user' => $user]) }}">
+                    <form class="row g-3" editForm method="post" action="{{ route('users.update', ['user' => $user]) }}">
                         <div class="col-md-12">
                             @method('PUT')
                             @csrf

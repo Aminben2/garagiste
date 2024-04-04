@@ -94,7 +94,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    @component('admin.components.delete-modal')
+                    @component('admin.components.delete-modal', ['item' => 'user'])
                     @endcomponent
                 </div>
             @else

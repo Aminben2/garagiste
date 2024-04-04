@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -16,7 +17,7 @@ class UsersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new User([
+        $user = User::create([
             'username' => $row["username"],
             'password' => Hash::make($row["password"]),
             'email' => $row["email"],
@@ -25,5 +26,8 @@ class UsersImport implements ToModel, WithHeadingRow
             'address' => $row["address"],
             'phoneNumber' => $row["phonenumber"],
         ]);
+
+        $user->roles()->attach(Role::where('name', 'client')->first(), ['user_id' => $user->id]);
+        return $user;
     }
 }
