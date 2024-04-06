@@ -15,19 +15,20 @@
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-home-alt"></i>
                 </div>
-                <div class="menu-title">Dashboard</div>
+                <div class="menu-title">{{ __('Dashboard') }}</div>
             </a>
             <ul>
                 @foreach (auth()->user()->roles->pluck('name')->toArray() as $role)
                     @if ($role === 'admin')
                         <li>
-                            <a href="{{ route('admin.dashboard') }}"><i class="bx bx-radio-circle"></i>Admin
-                                Dashboard</a>
+                            <a href="{{ route('admin.dashboard') }}"><i
+                                    class="bx bx-radio-circle"></i>{{ __('Admin Dashboard') }}</a>
                         </li>
                     @endif
                     @if ($role === 'client')
                         <li>
-                            <a href="{{ route('dashboard') }}"><i class="bx bx-radio-circle"></i>Client Dashboard</a>
+                            <a href="{{ route('dashboard') }}"><i
+                                    class="bx bx-radio-circle"></i>{{ __('Client Dashboard') }}</a>
                         </li>
                     @endif
                 @endforeach
@@ -38,14 +39,14 @@
 
                 <div class="parent-icon"><i class="bx bx-user-circle"></i>
                 </div>
-                <div class="menu-title">User management</div>
+                <div class="menu-title">{{ __('User management') }}</div>
             </a>
             <ul>
-                <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>All users</a>
+                <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>{{ __('All users') }}</a>
                 </li>
-                <li> <a href="{{ route('clients') }}"><i class="bx bx-radio-circle"></i>Clients</a>
+                <li> <a href="{{ route('clients') }}"><i class="bx bx-radio-circle"></i>{{ __('Clients') }}</a>
                 </li>
-                <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>Add user</a>
+                <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>{{ __('Add user') }}</a>
                 </li>
             </ul>
         </li>
@@ -54,12 +55,13 @@
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"> <i class="lni lni-car-alt"></i>
                 </div>
-                <div class="menu-title">Vehicle management</div>
+                <div class="menu-title">{{ __('Vehicle management') }}</div>
             </a>
             <ul>
-                <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>Vehicles</a>
+                <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>{{ __('Vehicles') }}</a>
                 </li>
-                <li> <a href="{{ route('vehicles.create') }}"><i class="bx bx-radio-circle"></i>Add Vehicle</a>
+                <li> <a href="{{ route('vehicles.create') }}"><i
+                            class="bx bx-radio-circle"></i>{{ __('Add Vehicle') }}</a>
                 </li>
             </ul>
         </li>
@@ -67,23 +69,27 @@
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
-                <div class="menu-title">Spare Parts</div>
+                <div class="menu-title">{{ __('Spare Parts') }}</div>
             </a>
             <ul>
-                <li> <a href="{{ route('spare-parts') }}"><i class="bx bx-radio-circle"></i>Spare parts</a>
+                <li> <a href="{{ route('spare-parts') }}"><i
+                            class="bx bx-radio-circle"></i>{{ __('Spare parts') }}</a>
                 </li>
-                <li> <a href="{{ route('spare-parts.create') }}"><i class="bx bx-radio-circle"></i>Add Part</a>
+                <li> <a href="{{ route('spare-parts.create') }}"><i
+                            class="bx bx-radio-circle"></i>{{ __('Add Part') }}</a>
                 </li>
             </ul>
         </li>
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-receipt"></i></div>
-                <div class="menu-title">Invoices</div>
+                <div class="menu-title">{{ __('Invoices') }}</div>
             </a>
             <ul>
-                <li><a href="{{ route('invoices') }}"><i class="bx bx-radio-circle"></i> Invoices</a></li>
-                <li><a href="{{ route('invoices.create') }}"><i class="bx bx-radio-circle"></i> Add Invoice</a></li>
+                <li><a href="{{ route('invoices') }}"><i class="bx bx-radio-circle"></i> {{ __('Invoices') }}</a>
+                </li>
+                <li><a href="{{ route('invoices.create') }}"><i class="bx bx-radio-circle"></i>
+                        {{ __('Add Invoice') }}</a></li>
             </ul>
         </li>
 

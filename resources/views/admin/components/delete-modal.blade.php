@@ -10,7 +10,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <form id="deleteForm" method="POST" action="" class="d-inline">
-                    @csrf
+                    @csrfchat 
                     @method('DELETE')
                     <button type="submit" class="btn btn-primary">Delete</button>
                 </form>

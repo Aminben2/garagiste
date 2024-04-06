@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get("change-language/{locale}", [AppController::class, "changeLanguage"])->name("change.lang");
 
 Route::middleware(['auth', "isClient"])->group(function () {
     Route::get('/admin', AdminController::class)->name('admin.dashboard');

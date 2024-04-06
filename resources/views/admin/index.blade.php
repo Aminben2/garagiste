@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -54,20 +53,11 @@
         <!--Start Back To Top Button-->
         <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
         <!--End Back To Top Button-->
-
     </div>
     <!--end wrapper-->
-
-
-
     @include('admin.partials.footer')
-
-
-
-
     <!-- Bootstrap JS -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
@@ -81,13 +71,12 @@
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
-
+    <!--app JS-->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
         });
-    </script>
-    <script>
         $(document).ready(function() {
             var table = $('#example2').DataTable({
                 lengthChange: false,
@@ -97,24 +86,6 @@
             table.buttons().container()
                 .appendTo('#example2_wrapper .col-md-6:eq(0)');
         });
-    </script>
-    <!--app JS-->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-
-
-    <script>
-        window.gtranslateSettings = {
-            "default_language": "en",
-            "languages": ["en", "fr", "de", "it", "es"],
-            "wrapper_selector": ".gtranslate_wrapper",
-            "flag_style": "3d",
-            "alt_flags": {
-                "en": "usa"
-            }
-        }
-    </script>
-    <script src="https://cdn.gtranslate.net/widgets/latest/flags.js"></script>
-    <script>
         // Smoothly show the success alert
         document.getElementById('successAlert').style.opacity = 1;
 

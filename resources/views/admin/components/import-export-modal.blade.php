@@ -4,13 +4,13 @@
 </button>
 <form action="{{ $exportRoute }}" method="GET">
     @csrf
-    <button type="submit" class="btn btn-danger radius-30 mt-2 mt-lg-0 me-3" id="exportBtn">Export</button>
+    <button type="submit" class="btn btn-danger radius-30 mt-2 mt-lg-0 me-3" id="exportBtn">{{ __('Export') }}</button>
 </form>
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel">Import {{ $title }}</h5>
+                <h5 class="modal-title" id="importModalLabel">{{ __('Import') }} {{ $title }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ $importRoute }}" method="POST" enctype="multipart/form-data">
@@ -21,8 +21,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Import</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="submit" class="btn btn-success">{{ __('Import') }}</button>
                 </div>
             </form>
         </div>

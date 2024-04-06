@@ -16,6 +16,17 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @auth
+                    @foreach (auth()->user()->roles->pluck('name')->toArray() as $role)
+                        @if ($role === 'admin')
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                    {{ __('Admin Dashbord') }}
+                                </x-nav-link>
+                            </div>
+                        @endif
+                    @endforeach
+                @endauth
             </div>
 
             <!-- Settings Dropdown -->

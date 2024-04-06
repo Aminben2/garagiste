@@ -16,8 +16,8 @@
                 @endcomponent
                 <div class="ms-auto">
                     <a href="{{ route('invoices.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
-                            class="bx bxs-plus-square"></i>Add New
-                        User</a>
+                            class="bx bxs-plus-square"></i>{{__("Add New
+                        User")}}</a>
                 </div>
                 @component('admin.components.import-export-modal', [
                     'importRoute' => route('users.import'),
@@ -72,7 +72,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('user.details', ['user' => $user]) }}"
-                                            class="btn btn-primary btn-sm radius-30 px-4">View Details</a>
+                                            class="btn btn-primary btn-sm radius-30 px-4">{{ __("View Details") }}</a>
                                     </td>
                                     <td>
                                         <div class="d-flex order-actions">
@@ -99,11 +99,10 @@
                 </div>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
-                    <div class="text-white">There are no users!</div>
+                    <div class="text-white">{{ __("There are no users") }}!</div>
                 </div>
             @endif
 
         </div>
     </div>
-
 @endsection

@@ -1,8 +1,8 @@
 @props(['route', 'searchItem'])
 <div class="position-relative">
     <form method="GET" action="{{ $route }}">
-        <input type="text" name="search" class="form-control ps-5 radius-30" placeholder="Search {{ $searchItem }}"
-            value="{{ request()->input('search') }}">
+        <input type="text" name="search" class="form-control ps-5 radius-30"
+            placeholder="{{ __('Search') }} {{ __($searchItem) }}" value="{{ request()->input('search') }}">
         <button type="submit" class="d-none"></button> <!-- to submit the form -->
         <span class="position-absolute top-50 product-show translate-middle-y"><i class="bx bx-search"></i></span>
         @if (request()->filled('search'))
@@ -20,7 +20,3 @@
         @endif
     </form>
 </div>
-
-
-
-
