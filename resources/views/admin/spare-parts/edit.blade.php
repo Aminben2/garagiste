@@ -12,8 +12,10 @@
                     <form class="row g-3" method="post"
                         action="{{ route('spare-parts.update', ['spare_part' => $sparePart]) }}"
                         enctype="multipart/form-data">
+                        @method('put')
+                        @csrf
+
                         <div class="col-md-12">
-                            @csrf
                             <label for="input25" class="form-label">Name</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-tools"></i></span>

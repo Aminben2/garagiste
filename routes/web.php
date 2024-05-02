@@ -9,6 +9,7 @@ use App\Http\Controllers\RepairController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,12 +34,18 @@ Route::get('/dashboard', function () {
 Route::get("change-language/{locale}", [AppController::class, "changeLanguage"])->name("change.lang");
 
 Route::middleware(['auth', "isClient"])->group(function () {
+    Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
     Route::get("/admin/users/clients", [ClientController::class, "index"])->name("clients");
     Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "clientInvoices"])->name("client.invoices");
     Route::get('/admin/users/users-export', [UserController::class, 'export'])->name('users.export');
     Route::post('/admin/users/users-import', [UserController::class, 'import'])->name('users.import');
     Route::get("/admin/users/clients/{invoice}/repairs", [ClientController::class, "clientInvoiceRepairs"])->name("invoice.repairs");
+    Route::get("/admin/users/manageRoles", [UserController::class, "showManageRoles"])->name("manage.roles");
+    Route::post("/admin/users/manageRoles/{userId}", [UserController::class, "ManageRoles"])->name("update.user.roles");
+    Route::get("/admin/users/getUser/{userId}", [UserController::class, "getUser"]);
+    Route::put("/admin/users/updateById/{userId}", [UserController::class, "updateById"]);
+
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',
         'create' => 'users.create',

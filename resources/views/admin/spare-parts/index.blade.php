@@ -62,47 +62,18 @@
                                         <div class="d-flex order-actions">
                                             <a href="{{ route('spare-parts.edit', ['spare_part' => $s]) }}"
                                                 class=""><i class='bx bxs-edit'></i></a>
-                                            <form method="POST"
-                                                action="{{ route('spare-parts.destroy', ['spare_part' => $s]) }}"
-                                                class="ms-3 d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal{{ $s->id }}" class="btn p-0">
-                                                    <i class="bx bxs-trash text-danger"></i>
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal{{ $s->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel{{ $s->id }}"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="exampleModalLabel{{ $s->id }}">Confirm
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">Are you sure you want to delete this
-                                                                part?</div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">delete</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                class="btn p-0 ms-3 d-inline"
+                                                onclick="setDeleteFormAction('{{ route('spare-parts.destroy', ['spare_part' => $s]) }}')">
+                                                <i class="bx bxs-trash text-danger"></i>
+                                            </button>
 
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
-
-
+                            @component('admin.modals.delete-modal', ['item' => 'spare part', 'title' => 'Delete Part'])
+                            @endcomponent
                         </tbody>
                     </table>
                 </div>

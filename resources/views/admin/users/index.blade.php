@@ -16,15 +16,15 @@
                 @endcomponent
                 <div class="ms-auto">
                     <a href="{{ route('invoices.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
-                            class="bx bxs-plus-square"></i>{{__("Add New
-                        User")}}</a>
+                            class="bx bxs-plus-square"></i>{{ __('Add New User') }}</a>
                 </div>
-                @component('admin.components.import-export-modal', [
+                @component('admin.modals.import-export-modal', [
                     'importRoute' => route('users.import'),
                     'title' => 'Users',
                     'exportRoute' => route('users.export'),
                 ])
                 @endcomponent
+                <button onclick="window.location.href='/generate-pdf'">PDF</button>
             </div>
             @if (count($users) > 0)
                 <div class="table-responsive">
@@ -42,7 +42,7 @@
                         </thead>
                         <tbody id="userTableBody">
                             @foreach ($users as $user)
-                                <tr>
+                                <tr id="row{{ $user->id }}">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
@@ -72,37 +72,104 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('user.details', ['user' => $user]) }}"
-                                            class="btn btn-primary btn-sm radius-30 px-4">{{ __("View Details") }}</a>
+                                            class="btn btn-primary btn-sm radius-30 px-4">{{ __('View Details') }}</a>
                                     </td>
                                     <td>
                                         <div class="d-flex order-actions">
-                                            <a href="{{ route('users.edit', ['user' => $user]) }}" class=""><i
-                                                    class='bx bxs-edit'></i></a>
-                                            <form method="POST" action="{{ route('users.destroy', ['user' => $user]) }}"
-                                                class="ms-3 d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    onclick="setDeleteFormAction('{{ route('users.destroy', ['user' => $user]) }}')"
-                                                    class="btn p-0">
-                                                    <i class="bx bxs-trash text-danger"></i>
-                                                </button>
-                                            </form>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleScrollableModal"
+                                                data-user-id="{{ $user->id }}" class="btn btn-primary edit-btn">
+                                                <i class='bx bxs-edit'></i>
+                                            </button>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                onclick="setDeleteFormAction('/admin/users/{{ $user->id }}')"
+                                                class="btn p-0 ms-3 d-inline">
+                                                <i class="bx bxs-trash text-danger"></i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    @component('admin.components.delete-modal', ['item' => 'user'])
+                    @component('admin.modals.delete-modal', ['item' => 'user', 'title' => 'Delete User'])
                     @endcomponent
+                    @include('admin.modals.edit-user-modal')
                 </div>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
-                    <div class="text-white">{{ __("There are no users") }}!</div>
+                    <div class="text-white">{{ __('There are no users') }}!</div>
                 </div>
             @endif
+            <script>
+                document.getElementById('searchForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const searchInput = document.getElementById('searchInput').value;
+
+                    try {
+                        const response = await fetch(`/admin/users?search=${searchInput}`);
+                        const users = await response.json();
+                        renderUsers(users);
+                        document.getElementById('searchInput').value = ""
+                    } catch (error) {
+                        console.error('Error fetching users:', error);
+                    }
+                });
+
+                function renderUsers(users) {
+                    const tableBody = document.getElementById('userTableBody');
+                    tableBody.innerHTML = '';
+
+                    users.forEach(user => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' +
+                            '<div class="d-flex align-items-center">' +
+                            '<div>' +
+                            '<input class="form-check-input me-3" type="checkbox" value="" aria-label="...">' +
+                            '</div>' +
+                            '<div class="ms-2">' +
+                            '<h6 class="mb-0 font-14">' + user.id + '</h6>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '<td>' + user.username + '</td>' +
+                            '<td>' + user.email + '</td>' +
+                            '<td>' + user.address + '</td>' +
+                            '<td>';
+
+                        if (user.roles && user.roles.length > 0) {
+                            tr.innerHTML += user.roles.map(role => {
+                                const color = {
+                                    1: '#3b5998',
+                                    2: '#3c8dbc',
+                                    3: '#f56954',
+                                } [role.id] || '#0073b7';
+                                return '<span style="color: ' + color + '">' + role.name + ', </span>';
+                            }).join('');
+                        }
+
+                        tr.innerHTML += '</td>' +
+                            '<td>' +
+                            '<a href="' + user.detailsRoute +
+                            '" class="btn btn-primary btn-sm radius-30 px-4">View Details</a>' +
+                            '</td>' +
+                            '<td>' +
+                            '<div class="d-flex order-actions">' +
+                            '<button data-bs-toggle="modal" data-bs-target="#exampleScrollableModal" data-user-id="' + user
+                            .id + '" class="btn btn-primary edit-btn">' +
+                            '<i class="bx bxs-edit"></i>' +
+                            '</button>' +
+                            '<button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setDeleteFormAction(\'' +
+                            user.destroyRoute + '\')" class="btn p-0 ms-3 d-inline">' +
+                            '<i class="bx bxs-trash text-danger"></i>' +
+                            '</button>' +
+                            '</div>' +
+                            '</td>';
+                        tableBody.appendChild(tr);
+                    });
+                }
+            </script>
 
         </div>
     </div>
+
 @endsection

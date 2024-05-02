@@ -24,7 +24,7 @@
                             class="bx bxs-plus-square"></i>Add New
                         Client</a>
                 </div>
-                @component('admin.components.import-export-modal', [
+                @component('admin.modals.import-export-modal', [
                     'importRoute' => route('users.import'),
                     'title' => 'Users',
                     'exportRoute' => route('users.export'),
@@ -47,7 +47,7 @@
                         </thead>
                         <tbody>
                             @foreach ($clients as $client)
-                                <tr>
+                                <tr id="row{{ $client->id }}">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
@@ -72,48 +72,22 @@
                                     </td>
                                     <td>
                                         <div class="d-flex order-actions">
-                                            <a href="{{ route('users.edit', ['user' => $client]) }}" class=""><i
-                                                    class='bx bxs-edit'></i></a>
-                                            <form method="POST" action="{{ route('users.destroy', ['user' => $client]) }}"
-                                                class="ms-3 d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal{{ $client->id }}" class="btn p-0">
-                                                    <i class="bx bxs-trash text-danger"></i>
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal{{ $client->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel{{ $client->id }}"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="exampleModalLabel{{ $client->id }}">Modal title
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">Are you sure you want to delete this
-                                                                user?</div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">delete</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleScrollableModal"
+                                                data-user-id="{{ $client->id }}" class="btn btn-primary edit-btn">
+                                                <i class='bx bxs-edit'></i>
+                                            </button>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                onclick="setDeleteFormAction('/admin/users/{{ $client->id }}')"
+                                                class="btn p-0 ms-3 d-inline">
+                                                <i class="bx bxs-trash text-danger"></i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
-
-
+                            @component('admin.modals.delete-modal', ['item' => 'client', 'title' => 'Deelete Client'])
+                            @endcomponent
+                            @include('admin.modals.edit-user-modal')
                         </tbody>
                     </table>
                 </div>

@@ -11,6 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    
                 </div>
                 <div class="modal-footer">
                     <a href="" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>

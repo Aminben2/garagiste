@@ -44,6 +44,9 @@
             <ul>
                 <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>{{ __('All users') }}</a>
                 </li>
+                <li> <a href="{{ route('manage.roles') }}"><i
+                            class="bx bx-radio-circle"></i>{{ __('Manage Roles') }}</a>
+                </li>
                 <li> <a href="{{ route('clients') }}"><i class="bx bx-radio-circle"></i>{{ __('Clients') }}</a>
                 </li>
                 <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>{{ __('Add user') }}</a>
