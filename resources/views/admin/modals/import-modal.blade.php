@@ -1,11 +1,4 @@
-@props(['importRoute', 'exportRoute', 'title'])
-<button type="button" class="btn btn-success radius-30" data-bs-toggle="modal" data-bs-target="#importModal">
-    Import {{ $title }}
-</button>
-<form action="{{ $exportRoute }}" method="GET">
-    @csrf
-    <button type="submit" class="btn btn-danger radius-30 mt-2 mt-lg-0 me-3" id="exportBtn">{{ __('Export') }}</button>
-</form>
+@props(['importRoute', 'title'])
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

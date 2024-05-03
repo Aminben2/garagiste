@@ -2,6 +2,8 @@
 @section('content')
     @component('admin.components.break-crump', ['title' => 'User Management', 'page' => 'Users', 'subpage' => ''])
     @endcomponent
+    @component('admin.modals.import-modal', ['importRoute' => route('users.import'), 'title' => 'Users'])
+    @endcomponent
     <div class="card">
         @if (!empty(session('status')))
             @component('admin.components.seccuss-alert', [
@@ -15,15 +17,10 @@
                 @component('admin.components.search-bar', ['route' => route('users'), 'searchItem' => 'user'])
                 @endcomponent
                 <div class="ms-auto">
-                    <a href="{{ route('invoices.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
-                            class="bx bxs-plus-square"></i>{{ __('Add New User') }}</a>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleScrollableModal1"
+                        class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
+                            class="bx bxs-plus-square"></i>{{ __('Add New User') }}</button>
                 </div>
-                @component('admin.modals.import-export-modal', [
-                    'importRoute' => route('users.import'),
-                    'title' => 'Users',
-                    'exportRoute' => route('users.export'),
-                ])
-                @endcomponent
                 <button onclick="window.location.href='/generate-pdf'">PDF</button>
             </div>
             @if (count($users) > 0)
@@ -94,6 +91,7 @@
                     @component('admin.modals.delete-modal', ['item' => 'user', 'title' => 'Delete User'])
                     @endcomponent
                     @include('admin.modals.edit-user-modal')
+                    @include('admin.modals.create-user-modal')
                 </div>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">

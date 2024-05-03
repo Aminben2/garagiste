@@ -73,6 +73,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            let id = "";
             const editButtons = document.querySelectorAll('.edit-btn');
             const firstNameaInput = document.getElementById('firstName');
             const lastNameInput = document.getElementById('lastName');
@@ -91,7 +92,8 @@
                     fetch(`/admin/users/getUser/${userId}`)
                         .then(response => response.json())
                         .then(data => {
-                            updateForm.action = `/admin/users/updateById/${data.user.id}`
+                            // updateForm.action = `/admin/users/updateById/${data.user.id}`
+                            id = data.user.id
                             // Populate user details in the form
                             firstNameaInput.value = data.user.firstName;
                             lastNameInput.value = data.user.lastName;
@@ -139,8 +141,7 @@
                 event.preventDefault();
                 const formData = new FormData(document.getElementById('updateForm'));
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                console.log(updateForm.action);
-                fetch(updateForm.action, {
+                fetch("/admin/users/updateById/" + id, {
                         method: 'PUT',
                         body: formData,
                         headers: {

@@ -1,5 +1,4 @@
 @props(['title', 'page', 'subpage'])
-<!--breadcrumb-->
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">{{ $title }}</div>
     <div class="ps-3">
@@ -16,22 +15,22 @@
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <button type="button" class="btn btn-primary">{{ __("Settings") }}</button>
+            <button type="button" class="btn btn-primary">{{ __('Actions') }}</button>
             <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
                 data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                <a class="dropdown-item" href="javascript:;">Manage users</a>
-                <a class="dropdown-item" href="javascript:;">Manage roles</a>
-                <a class="dropdown-item" href="javascript:;">Manage permissions</a>
-                {{-- <a class="dropdown-item" href="javascript:;" onclick="window.location.href = '{{ route('user.index') }}'">Manage users</a>
-                <a class="dropdown-item" href="javascript:;" onclick="window.location.href = '{{ route('role.index') }}'">Manage roles</a>
-                <a class="dropdown-item" href="javascript:;" onclick="window.location.href = '{{ route('permission.index') }}'">Manage permissions</a> --}}
+                <a class="dropdown-item" href="{{ route('users') }}">Manage users</a>
+                <a class="dropdown-item" href="{{ route('manage.roles') }}">Manage roles</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:;">Backup data</a>
-                <a class="dropdown-item" href="javascript:;">Refresh page</a>
+                <button type="button" class="dropdown-item" id="importButton" data-bs-toggle="modal"
+                    data-bs-target="#importModal">
+                    Import users
+                </button>
+                @component('admin.components.export--button', ['title' => 'users', 'exportRoute' => route('users.export')])
+                @endcomponent
+                <button class="dropdown-item" onclick="window.location.reload()">Refresh page</button>
             </div>
         </div>
     </div>
 </div>
-<!--end breadcrumb-->

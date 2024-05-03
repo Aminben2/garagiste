@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -82,7 +83,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
@@ -90,23 +91,31 @@ class UserController extends Controller
             'password' => ['required'],
             'address' => ['nullable', 'string', 'max:255'],
             'phoneNumber' => ['nullable', 'string', 'max:20'],
-            'role' => ['required', 'array', 'exists:roles,id'], // new validation rule
+            'role' => ['required', 'array', 'exists:roles,id'],
         ]);
+        if ($validator->fails()) {
+            $firstError = $validator->errors()->first();
+            return response()->json(['error' => $firstError], 422);
+        }
 
-        $user = User::create([
-            'firstName' => $request->input('firstName'),
-            'lastName' => $request->input('lastName'),
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'address' => $request->input('address'),
-            'phoneNumber' => $request->input('phoneNumber'),
-        ]);
+        try {
+            $user = User::create([
+                'firstName' => $request->input('firstName'),
+                'lastName' => $request->input('lastName'),
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'address' => $request->input('address'),
+                'phoneNumber' => $request->input('phoneNumber'),
+            ]);
 
-        // Attach roles to the user
-        $user->roles()->sync($request->input('role'));
+            // Attach roles to the user
+            $user->roles()->sync($request->input('role'));
 
-        return redirect()->route('users')->with('status', 'User ' . $user->username . ' created!');
+            return response()->json(["user" => $user, "userRoles" => $user->roles, "status" => "User created successfully"]);
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -207,7 +216,7 @@ class UserController extends Controller
         } else {
             // Handle case where user with given ID is not found
             return response()->json(['error' => 'User not found.'], 404);
-        }   
+        }
         // $user->delete();
         // return redirect()->route('users')->with('status', 'User ' . $user->username . ' deleted!');
     }
