@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Exports\RepairsExport;
 use App\Imports\RepairsImport;
 use App\Models\Invoice;

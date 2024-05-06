@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use PDF;
-use Illuminate\Http\Request;
 
 class PDFController extends Controller
 {

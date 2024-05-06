@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Exports\VehiclesExport;
 use App\Imports\VehiclesImport;
 use App\Models\User;

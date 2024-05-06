@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Exports\SparePartsExport;
 use App\Imports\SparePartsImport;
 use App\Models\SparePart;

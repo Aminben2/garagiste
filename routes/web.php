@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AppController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\MechanicConroller;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RepairController;
-use App\Http\Controllers\SparePartController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\PDFController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\MechanicConroller;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RepairController;
+use App\Http\Controllers\Admin\SparePartController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +42,9 @@ Route::middleware(['auth', "isClient"])->group(function () {
 
     // admin home page routes
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
+
+    // client home page routes
+    Route::get('/client', AdminController::class)->name('client.dashboard');
 
     // custom mechanic routes
     Route::get("/admin/users/mechanics/{mechanic}/repairs", [MechanicConroller::class, "mehcanicRepairs"])->name("mechanic.repairs");
