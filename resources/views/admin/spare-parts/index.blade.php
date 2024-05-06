@@ -1,7 +1,11 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
-
-    @component('admin.components.break-crump', ['title' => 'Spare parts', 'page' => 'Spare parts', 'subpage' => ''])
+    @component('admin.components.break-crump', [
+        'title' => 'Spare parts',
+        'page' => 'Spare parts',
+        'subpage' => '',
+        'exportRoute' => route('spareParts.export'),
+    ])
     @endcomponent
     <div class="card">
         @if (!empty(session('status')))
@@ -11,7 +15,8 @@
             ])
             @endcomponent
         @endif
-
+        @component('admin.modals.import-modal', ['importRoute' => route('spareParts.import'), 'title' => 'Spare Parts'])
+        @endcomponent
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
                 @component('admin.components.search-bar', ['route' => route('spare-parts'), 'searchItem' => 'Part'])
@@ -38,7 +43,7 @@
                         </thead>
                         <tbody>
                             @foreach ($spareParts as $s)
-                                <tr>
+                                <tr id="row{{ $s->id }}">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
@@ -64,7 +69,7 @@
                                                 class=""><i class='bx bxs-edit'></i></a>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                 class="btn p-0 ms-3 d-inline"
-                                                onclick="setDeleteFormAction('{{ route('spare-parts.destroy', ['spare_part' => $s]) }}')">
+                                                onclick="setDeleteFormAction('/admin/spare-parts/{{ $s->id }}')">
                                                 <i class="bx bxs-trash text-danger"></i>
                                             </button>
 
@@ -72,7 +77,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            @component('admin.modals.delete-modal', ['item' => 'spare part', 'title' => 'Delete Part'])
+                            @component('admin.modals.delete-spare-part-modal', ['item' => 'spare part', 'title' => 'Delete Part'])
                             @endcomponent
                         </tbody>
                     </table>

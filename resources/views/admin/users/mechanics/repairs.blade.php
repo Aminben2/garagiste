@@ -1,6 +1,5 @@
 @extends('layouts.index')
 @section('content')
-    @endcomponent
     <div class="card">
         @if (!empty(session('status')))
             @component('admin.components.seccuss-alert', [
@@ -10,12 +9,7 @@
             @endcomponent
         @endif
         <div class="card-body">
-            @component('admin.components.search-bar', [
-                'route' => route('invoice.repairs', ['invoice' => $invoice]),
-                'searchItem' => 'repair',
-            ])
-            @endcomponent
-            @if (count($clientRepairs) > 0)
+            @if (count($repairs) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">
                         <thead class="table-light">
@@ -32,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clientRepairs as $rep)
+                            @foreach ($repairs as $rep)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">

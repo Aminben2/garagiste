@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SparePartsExport;
+use App\Imports\SparePartsImport;
 use App\Models\SparePart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SparePartController extends Controller
 {
@@ -28,6 +31,20 @@ class SparePartController extends Controller
         $spareParts = $spareParts->get();
 
         return view('admin.spare-parts.index', compact('spareParts'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new SparePartsExport, 'spare-parts.xlsx');
+    }
+    public function import()
+    {
+        if (request()->hasFile('file')) {
+            Excel::import(new SparePartsImport, request()->file('file'));
+            return back()->with('status', 'Spare Parts imported successfully!');
+        } else {
+            return back()->with('status', 'Please select a file to import.');
+        }
     }
 
     /**
@@ -115,10 +132,18 @@ class SparePartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SparePart $sparePart)
+    public function destroy($sparePartId)
     {
-        $sparePart->delete();
-        return redirect()->route('spare-parts')->with('status', 'Spare part deleted!');
+        $part = SparePart::find($sparePartId); // Retrieve the user by ID
+        if ($part) {
+            $part->delete(); // Delete the part$part
+            return response()->json(["part" => $part, "status" => "part" . $part->partName . "was deleted successfully"]);
+        } else {
+            // Handle case where user with given ID is not found
+            return response()->json(['error' => 'Part not found.'], 404);
+        }
+        // $sparePart->delete();
+        // return redirect()->route('spare-parts')->with('status', 'Spare part deleted!');
     }
 
 

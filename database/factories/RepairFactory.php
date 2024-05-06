@@ -28,6 +28,7 @@ class RepairFactory extends Factory
             "hourPrice" => $this->faker->randomFloat(2, 1000, 10000),
             "hours" => $this->faker->randomNumber(),
             "workPrice" => $this->faker->randomFloat(2, 1000, 10000),
+            "title" => $this->faker->title()
         ];
     }
 }

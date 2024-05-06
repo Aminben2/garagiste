@@ -212,7 +212,7 @@ class UserController extends Controller
         $user = User::find($userId); // Retrieve the user by ID
         if ($user) {
             $user->delete(); // Delete the user
-            return response()->json($user);
+            return response()->json(["user" => $user, "status" => "User" . $user->username . "was deleted successfully"]);
         } else {
             // Handle case where user with given ID is not found
             return response()->json(['error' => 'User not found.'], 404);

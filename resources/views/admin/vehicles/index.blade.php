@@ -1,10 +1,11 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
 
     @component('admin.components.break-crump', [
         'title' => 'Vehicle Management',
         'page' => 'Vehicles',
         'subpage' => '',
+        'exportRoute' => route('vehicles.export'),
     ])
     @endcomponent
     <div class="card">
@@ -19,6 +20,8 @@
             @component('admin.components.danger-alert', ['errors' => $errors])
             @endcomponent
         @endif
+        @component('admin.modals.import-modal', ['importRoute' => route('vehicles.import'), 'title' => 'Vehicles'])
+        @endcomponent
         <div class="card-body">
             @include('admin.vehicles.create')
             <div class="d-lg-flex align-items-center mb-4 gap-3">

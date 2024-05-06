@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\MechanicConroller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepairController;
 use App\Http\Controllers\SparePartController;
@@ -34,17 +35,45 @@ Route::get('/dashboard', function () {
 Route::get("change-language/{locale}", [AppController::class, "changeLanguage"])->name("change.lang");
 
 Route::middleware(['auth', "isClient"])->group(function () {
+
+    // pdf routes
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+    Route::get('/admin/pdfs/invoicePDF/{invoiceId}', [PDFController::class, 'generateInvoicePDF']);
+
+    // admin home page routes
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
+
+    // custom mechanic routes
+    Route::get("/admin/users/mechanics/{mechanic}/repairs", [MechanicConroller::class, "mehcanicRepairs"])->name("mechanic.repairs");
+    Route::get("/admin/users/mechanics", [MechanicConroller::class, "index"])->name("mechanics");
+
+    // custom clients routes
+    Route::get("/admin/users/clients/{invoice}/repairs", [ClientController::class, "clientInvoiceRepairs"])->name("invoice.repairs");
     Route::get("/admin/users/clients", [ClientController::class, "index"])->name("clients");
     Route::get("/admin/users/clients/{client}/invoices", [ClientController::class, "clientInvoices"])->name("client.invoices");
+
+    // export routes
     Route::get('/admin/users/users-export', [UserController::class, 'export'])->name('users.export');
+    Route::get('/admin/repairs/repairs-export', [RepairController::class, 'export'])->name('repairs.export');
+    Route::get('/admin/invoices/invoices-export', [InvoiceController::class, 'export'])->name('invoices.export');
+    Route::get('/admin/vehicles/vehicles-export', [VehicleController::class, 'export'])->name('vehicles.export');
+    Route::get('/admin/spareParts/spareParts-export', [SparePartController::class, 'export'])->name('spareParts.export');
+
+    // import routes
     Route::post('/admin/users/users-import', [UserController::class, 'import'])->name('users.import');
-    Route::get("/admin/users/clients/{invoice}/repairs", [ClientController::class, "clientInvoiceRepairs"])->name("invoice.repairs");
+    Route::post('/admin/repairs/repairs-import', [RepairController::class, 'import'])->name('repairs.import');
+    Route::post('/admin/invoices/invoices-import', [InvoiceController::class, 'import'])->name('invoices.import');
+    Route::post('/admin/vehicles/vehicles-import', [VehicleController::class, 'import'])->name('vehicles.import');
+    Route::post('/admin/spareParts/spareParts-import', [SparePartController::class, 'import'])->name('spareParts.import');
+
+    // custom users routes
     Route::get("/admin/users/manageRoles", [UserController::class, "showManageRoles"])->name("manage.roles");
     Route::post("/admin/users/manageRoles/{userId}", [UserController::class, "ManageRoles"])->name("update.user.roles");
     Route::get("/admin/users/getUser/{userId}", [UserController::class, "getUser"]);
     Route::put("/admin/users/updateById/{userId}", [UserController::class, "updateById"]);
+
+    // custom repairs routes
+    Route::put("/admin/repairs/updateStatus/{repairId}/{status}", [RepairController::class, "updateStatus"]);
 
     Route::resource('admin/users', UserController::class)->names([
         'index' => 'users',

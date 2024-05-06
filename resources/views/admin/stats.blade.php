@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
     <div class="row row-cols-1 row-cols-lg-4">
         <div class="col">
@@ -94,142 +94,109 @@
             </div>
         </div>
     </div><!--end row-->
-
-    <div class="card radius-10">
-        <div class="card-header bg-transparent">
-            <div class="d-flex align-items-center">
-                <div>
-                    <h6 class="mb-0">Recent Appointments</h6>
-                </div>
-                <div class="dropdown ms-auto">
-                    <a class="dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown"><i
-                            class="bx bx-dots-horizontal-rounded font-22 text-option"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">Action</a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;">Another action</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;">Something else here</a>
-                        </li>
-                    </ul>
+    <div class="row row-cols-1 row-cols-lg-2">
+        <div class="col mb-4">
+            <div class="card radius-10" style="height: auto">
+                <div class="card-body">
+                    <canvas id="areaChartRepairs"></canvas>
+                    <select id="chartTypeRepairs" class="form-select mt-3">
+                        <option value="line">Line</option>
+                        <option value="bar">Bar</option>
+                        <!-- Add more chart types as needed -->
+                    </select>
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Product</th>
-                            <th>Photo</th>
-                            <th>Product ID</th>
-                            <th>Status</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Shipping</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Iphone 5</td>
-                            <td><img src="{{ asset('assets/images/products/01.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#9405822</td>
-                            <td><span class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span></td>
-                            <td>$1250.00</td>
-                            <td>03 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-quepal" role="progressbar" style="width: 100%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Earphone GL</td>
-                            <td><img src="{{ asset('assets/images/products/02.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#8304620</td>
-                            <td><span class="badge bg-gradient-blooker text-white shadow-sm w-100">Pending</span></td>
-                            <td>$1500.00</td>
-                            <td>05 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-blooker" role="progressbar" style="width: 60%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>HD Hand Camera</td>
-                            <td><img src="{{ asset('assets/images/products/03.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#4736890</td>
-                            <td><span class="badge bg-gradient-bloody text-white shadow-sm w-100">Failed</span></td>
-                            <td>$1400.00</td>
-                            <td>06 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-bloody" role="progressbar" style="width: 70%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Clasic Shoes</td>
-                            <td><img src="{{ asset('assets/images/products/04.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#8543765</td>
-                            <td><span class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span></td>
-                            <td>$1200.00</td>
-                            <td>14 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-quepal" role="progressbar" style="width: 100%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sitting Chair</td>
-                            <td><img src="{{ asset('assets/images/products/06.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#9629240</td>
-                            <td><span class="badge bg-gradient-blooker text-white shadow-sm w-100">Pending</span></td>
-                            <td>$1500.00</td>
-                            <td>18 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-blooker" role="progressbar" style="width: 60%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Hand Watch</td>
-                            <td><img src="{{ asset('assets/images/products/05.png') }}" class="product-img-2"
-                                    alt="product img"></td>
-                            <td>#8506790</td>
-                            <td><span class="badge bg-gradient-bloody text-white shadow-sm w-100">Failed</span></td>
-                            <td>$1800.00</td>
-                            <td>21 Feb 2020</td>
-                            <td>
-                                <div class="progress" style="height: 6px;">
-                                    <div class="progress-bar bg-gradient-bloody" role="progressbar" style="width: 40%">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col mb-4">
+            <div class="card radius-10">
+                <div class="card-body" style="height: auto">
+                    <canvas id="areaChartVehicles"></canvas>
+                    <select id="chartTypeVehicles" class="form-select mt-3">
+                        <option value="bar">Bar</option>
+                        <option value="pie">Pie</option>
+                        <!-- Add more chart types as needed -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10" style="height: auto">
+                    <div class="card-body">
+                        <canvas id="areaChartUsers"></canvas>
+                        <select id="chartTypeUsers" class="form-select mt-3">
+                            <option value="pie">Pie</option>
+                            <option value="line">Line</option>
+                            <!-- Add more chart types as needed -->
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        var ctx1 = document.getElementById('areaChartRepairs').getContext('2d');
+        var myChart1 = createChart(ctx1, 'line', @json($repairdata['labels']), @json($repairdata['data']));
+
+        var ctx2 = document.getElementById('areaChartUsers').getContext('2d');
+        var myChart2 = createChart(ctx2, 'pie', @json($userdata['labels']), @json($userdata['data']));
+
+        var ctx3 = document.getElementById('areaChartVehicles').getContext('2d');
+        var myChart3 = createChart(ctx3, 'bar', @json($vehicledata['labels']), @json($vehicledata['data']));
+
+        function createChart(ctx, chartType, labels, data) {
+            return new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Chart Data',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listeners for chart type selection
+        document.getElementById('chartTypeRepairs').addEventListener('change', function() {
+            myChart1.destroy();
+            myChart1 = createChart(ctx1, this.value, @json($repairdata['labels']), @json($repairdata['data']));
+        });
+
+        document.getElementById('chartTypeUsers').addEventListener('change', function() {
+            myChart2.destroy();
+            myChart2 = createChart(ctx2, this.value, @json($userdata['labels']), @json($userdata['data']));
+        });
+
+        document.getElementById('chartTypeVehicles').addEventListener('change', function() {
+            myChart3.destroy();
+            myChart3 = createChart(ctx3, this.value, @json($vehicledata['labels']), @json($vehicledata['data']));
+        });
+    </script>
 @endsection

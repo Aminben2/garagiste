@@ -40,10 +40,9 @@
             const modal = document.getElementById('exampleModal');
             const modalInstance = bootstrap.Modal.getInstance(modal);
             modalInstance.hide();
-            // document.getElementById("alertSubTitle").content = data.status
-            // document.getElementById("successAlert").style.display = "block"
 
-            const trElement = document.getElementById("row" + data.user.id).remove()
+            
+            const trElement = document.getElementById("row" + data.part.id).remove()
         } else {
             console.log(data.error);
         }

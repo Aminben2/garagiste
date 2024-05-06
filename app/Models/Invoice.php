@@ -10,11 +10,11 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'repair_id',
         'additionalCharges',
         'totalAmount',
         "dueDate",
-        "user_id"
+        "user_id",
+        "description"
     ];
 
     public function user()

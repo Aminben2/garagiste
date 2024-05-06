@@ -1,4 +1,4 @@
-@props(['title', 'page', 'subpage'])
+@props(['title', 'page', 'subpage', 'exportRoute'])
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">{{ $title }}</div>
     <div class="ps-3">
@@ -25,10 +25,11 @@
                 <div class="dropdown-divider"></div>
                 <button type="button" class="dropdown-item" id="importButton" data-bs-toggle="modal"
                     data-bs-target="#importModal">
-                    Import users
+                    Import {{ $page }}
                 </button>
-                @component('admin.components.export--button', ['title' => 'users', 'exportRoute' => route('users.export')])
-                @endcomponent
+                <a class="dropdown-item" href="{{ $exportRoute }}">Export {{ $page }}</a>
+                {{-- @component('admin.components.export--button', ['title' => $page, 'exportRoute' => $exportRoute])
+                @endcomponent --}}
                 <button class="dropdown-item" onclick="window.location.reload()">Refresh page</button>
             </div>
         </div>

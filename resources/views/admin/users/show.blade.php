@@ -1,11 +1,5 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
-    @component('admin.components.break-crump', [
-        'title' => 'User Management',
-        'page' => 'Users',
-        'subpage' => 'User Details',
-    ])
-    @endcomponent
     <section class="my-6">
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('User Details') }}

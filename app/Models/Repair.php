@@ -16,8 +16,12 @@ class Repair extends Model
         'endDate',
         'mechanicNotes',
         'clientNotes',
+        "workPrice",
+        "hours",
+        "hourPrice",
         'mechanic_id',
         'vehicle_id',
+        "invoice_id",
         "title"
     ];
 

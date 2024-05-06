@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoicesExport;
+use App\Imports\InvoiceImport;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -13,17 +16,30 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $users = User::all();
         $invoices = Invoice::all();
-        return view("admin.invoices.index", compact("invoices"));
+        return view("admin.invoices.index", compact("invoices", "users"));
     }
 
+    public function export()
+    {
+        return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
+    public function import()
+    {
+        if (request()->hasFile('file')) {
+            Excel::import(new InvoiceImport, request()->file('file'));
+            return back()->with('status', 'Users imported successfully!');
+        } else {
+            return back()->with('status', 'Please select a file to import.');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $users = User::all();
-        return view("admin.invoices.create", compact("users"));
+        return view("admin.invoices.create");
     }
 
     /**
@@ -31,27 +47,26 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             "description" => ['required', 'string', 'max:255'],
             "totalAmount" => ['required', 'numeric'],
-            "additionalCharge" => ['required', 'numeric'],
+            "additionalCharges" => ['required', 'numeric'],
             "dueDate" => ["required", "date"],
             "user_id" => ["required", "exists:users,id"],
         ]);
 
         $invoice = Invoice::create($request->all());
-        return redirect()->back()->with("success", "Invoice created successfully");
+        return redirect()->back()->with("status", "Invoice created successfully");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show($invoice)
     {
-        $repairs = $invoice->repairs;
-        return view("admin.invoices.show", compact("invoice", "repairs"));
+        $data = Invoice::with("repairs")->find($invoice);
+        return view("admin.invoices.show", compact("data"));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -69,13 +84,12 @@ class InvoiceController extends Controller
         $request->validate([
             "description" => ['required', 'string', 'max:255'],
             "totalAmount" => ['required', 'numeric'],
-            "additionalCharge" => ['required', 'numeric'],
+            "additionalCharges" => ['required', 'numeric'],
             "dueDate" => ["required", "date"],
-            "user_id" => ["required", "exists:users,id"],
         ]);
 
         $invoice->update($request->all());
-        return redirect()->back()->with("success", "Invoice updated successfully");
+        return redirect()->route("invoices")->with("status", "Invoice updated successfully");
     }
     /**
      * Remove the specified resource from storage.
@@ -83,6 +97,6 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         Invoice::destroy($invoice->id);
-        return redirect()->back()->with("success", "Invoice deleted successfully");
+        return redirect()->back()->with("status", "Invoice deleted successfully");
     }
 }

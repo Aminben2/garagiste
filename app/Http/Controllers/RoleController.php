@@ -13,7 +13,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view("admin.roles.index", compact("roles"));
     }
 
     /**
@@ -21,7 +22,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.roles.create");
     }
 
     /**
@@ -29,7 +30,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => ["required", "string", "max:255"],
+        ]);
+        Role::create($request->all());
+        return redirect()->back()->with("status", "Role created successfully");
     }
 
     /**
@@ -37,7 +42,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view("admin.roles.show", compact("role"));
     }
 
     /**
@@ -45,7 +50,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view("admin.roles.edit", compact("role"));
     }
 
     /**
@@ -53,7 +58,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            "name" => ["required", "string", "max:255"],
+        ]);
+        $role->update($request->all());
+        return redirect()->back()->with("status", "Role updated successfully");
     }
 
     /**
@@ -61,6 +70,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        Role::destroy($role->id);
+        return redirect()->back()->with("status", "Role deleted successfully");
     }
 }

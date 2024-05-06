@@ -1,10 +1,11 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
 
     @component('admin.components.break-crump', [
         'title' => 'Invoice Management',
         'page' => 'Invoices',
         'subpage' => '',
+        'exportRoute' => route('invoices.export'),
     ])
     @endcomponent
     <div class="card">
@@ -19,14 +20,16 @@
             @component('admin.components.danger-alert', ['errors' => $errors])
             @endcomponent
         @endif
+        @component('admin.modals.import-modal', ['importRoute' => route('invoices.import'), 'title' => 'Invoices'])
+        @endcomponent
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
                 @component('admin.components.search-bar', ['route' => route('invoices'), 'searchItem' => 'Invoice'])
                 @endcomponent
                 <div class="ms-auto">
-                    <a href="{{ route('invoices.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
-                            class="bx bxs-plus-square"></i>Add New
-                        Invoice</a>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleLargeModal"
+                        class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Add New
+                        Invoice</button>
                 </div>
             </div>
             @if (count($invoices) > 0)
@@ -36,7 +39,7 @@
                             <tr>
                                 <th>Invoice#</th>
                                 <th>Client</th>
-                                <th>Description</th>
+                                <th>Number of repairs</th>
                                 <th>Total amount</th>
                                 <th>Additionnal Charges</th>
                                 <th>Due Date</th>
@@ -59,7 +62,7 @@
                                         </div>
                                     </td>
                                     <td>{{ $invoice->user_id }} </td>
-                                    <td>{{ $invoice->description }}</td>
+                                    <td>{{ count($invoice->repairs) }}</td>
                                     <td>{{ $invoice->totalAmount }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -70,7 +73,7 @@
                                     </td>
                                     <td>{{ $invoice->dueDate }}</td>
                                     <td>
-                                        <a href="{{ route('invoice.details', ['invoice' => $invoice]) }}"
+                                        <a href="{{ route('invoice.details', ['invoice' => $invoice->id]) }}"
                                             class="btn btn-primary btn-sm radius-30 px-4">View Details</a>
                                     </td>
                                     <td>
@@ -116,8 +119,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-
-
+                            @include('admin.invoices.create')
                         </tbody>
                     </table>
                 </div>

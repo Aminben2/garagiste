@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\VehiclesExport;
+use App\Imports\VehiclesImport;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VehicleController extends Controller
 {
@@ -32,6 +35,20 @@ class VehicleController extends Controller
         $users = User::all();
 
         return view('admin.vehicles.index', compact('vehicles', 'users'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new VehiclesExport, 'vehicles.xlsx');
+    }
+    public function import()
+    {
+        if (request()->hasFile('file')) {
+            Excel::import(new VehiclesImport, request()->file('file'));
+            return back()->with('status', 'Vehicles imported successfully!');
+        } else {
+            return back()->with('status', 'Please select a file to import.');
+        }
     }
 
     /**

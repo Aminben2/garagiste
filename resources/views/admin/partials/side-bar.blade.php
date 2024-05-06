@@ -51,6 +51,8 @@
                 </li>
                 <li> <a href="{{ route('users.create') }}"><i class="bx bx-radio-circle"></i>{{ __('Add user') }}</a>
                 </li>
+                <li> <a href="{{ route('mechanics') }}"><i class="bx bx-radio-circle"></i>{{ __('Mechanics') }}</a>
+                </li>
             </ul>
         </li>
 
@@ -62,9 +64,6 @@
             </a>
             <ul>
                 <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>{{ __('Vehicles') }}</a>
-                </li>
-                <li> <a href="{{ route('vehicles.create') }}"><i
-                            class="bx bx-radio-circle"></i>{{ __('Add Vehicle') }}</a>
                 </li>
             </ul>
         </li>
@@ -91,8 +90,18 @@
             <ul>
                 <li><a href="{{ route('invoices') }}"><i class="bx bx-radio-circle"></i> {{ __('Invoices') }}</a>
                 </li>
-                <li><a href="{{ route('invoices.create') }}"><i class="bx bx-radio-circle"></i>
-                        {{ __('Add Invoice') }}</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-wrench bx-sm"></i></div>
+                <div class="menu-title">{{ __('Repairs') }}</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('repairs') }}"><i class="bx bx-radio-circle"></i> {{ __('Repairs') }}</a>
+                </li>
+                <li><a href="{{ route('repairs.create') }}"><i class="bx bx-radio-circle"></i>
+                        {{ __('Add Repair') }}</a></li>
             </ul>
         </li>
 

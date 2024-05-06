@@ -1,12 +1,5 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
-
-    @component('admin.components.break-crump', [
-        'title' => 'User Management',
-        'page' => 'Users',
-        'subpage' => 'Client Invoices',
-    ])
-    @endcomponent
     <div class="card">
         @if (!empty(session('status')))
             @component('admin.components.seccuss-alert', [

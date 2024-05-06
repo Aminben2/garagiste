@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
     @component('admin.components.break-crump', [
         'title' => 'Vehicle Management',

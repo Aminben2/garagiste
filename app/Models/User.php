@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function repairs()
     {
-        return $this->hasMany(Repair::class);
+        return $this->hasMany(Repair::class, 'mechanic_id');
     }
 
     public function invoices()

@@ -10,11 +10,6 @@
                     @csrf
                     <label for="roles">Select Roles:</label>
                     <div class="form-group d-flex align-items-center gap-3">
-                        {{-- <select name="roles[]" id="roles" class="form-control" multiple required>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select> --}}
                         @foreach ($roles as $role)
                             <div class="form-check form-check-info">
                                 <input class="form-check-input" type="checkbox" value="{{ $role->id }}"

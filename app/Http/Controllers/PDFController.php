@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use PDF;
 use Illuminate\Http\Request;
 
@@ -12,5 +13,19 @@ class PDFController extends Controller
         $data = ['title' => 'domPDF in Laravel 10'];
         $pdf = PDF::loadView('admin.pdfs.document', $data);
         return $pdf->download('document.pdf');
+    }
+
+    public function generateInvoicePDF($invoiceId)
+    {
+        $invoice = Invoice::with("repairs")->find($invoiceId);
+        $data = [
+            'invoice' => $invoice,
+            'repairs' => $invoice->repairs
+        ];
+        $pdf = PDF::loadView('admin.pdfs.invoice', $data)->setOptions([
+            'defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true, 'isJavascriptEnabled' => true
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }

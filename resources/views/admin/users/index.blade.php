@@ -1,6 +1,11 @@
-@extends('admin.index')
+@extends('layouts.index')
 @section('content')
-    @component('admin.components.break-crump', ['title' => 'User Management', 'page' => 'Users', 'subpage' => ''])
+    @component('admin.components.break-crump', [
+        'title' => 'User Management',
+        'page' => 'Users',
+        'subpage' => '',
+        'exportRoute' => route('users.export'),
+    ])
     @endcomponent
     @component('admin.modals.import-modal', ['importRoute' => route('users.import'), 'title' => 'Users'])
     @endcomponent
@@ -21,7 +26,6 @@
                         class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
                             class="bx bxs-plus-square"></i>{{ __('Add New User') }}</button>
                 </div>
-                <button onclick="window.location.href='/generate-pdf'">PDF</button>
             </div>
             @if (count($users) > 0)
                 <div class="table-responsive">
@@ -31,7 +35,6 @@
                                 <th>User#</th>
                                 <th>Username</th>
                                 <th>Email</th>
-                                <th>address</th>
                                 <th>Roles</th>
                                 <th>View Details</th>
                                 <th>Actions</th>
@@ -53,7 +56,6 @@
                                     </td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->address }}</td>
                                     <td>
 
                                         @foreach ($user->roles as $role)
@@ -74,7 +76,7 @@
                                     <td>
                                         <div class="d-flex order-actions">
                                             <button data-bs-toggle="modal" data-bs-target="#exampleScrollableModal"
-                                                data-user-id="{{ $user->id }}" class="btn btn-primary edit-btn">
+                                                data-user-id="{{ $user->id }}" class="btn btn-warning edit-btn">
                                                 <i class='bx bxs-edit'></i>
                                             </button>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"

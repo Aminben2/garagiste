@@ -15,9 +15,6 @@
     <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet" />
-
-
     <!-- loader-->
     <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('assets/js/pace.min.js') }}"></script>
@@ -33,6 +30,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     @vite(['resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -69,14 +68,9 @@
     <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/input-tags/js/tagsinput.js') }}"></script>
-
     <script src="{{ asset('assets/js/index.js') }}"></script>
-    <script src="{{ asset('assets/js/index2.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
@@ -99,7 +93,7 @@
         setTimeout(function() {
             document.getElementById('successAlert').style.opacity = 0;
             setTimeout(function() {
-                document.getElementById('successAlert').style.display = 'none';
+                admin document.getElementById('successAlert').style.display = 'none';
             }, 500);
         }, 5000);
     </script>
