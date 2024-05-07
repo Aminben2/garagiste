@@ -1,16 +1,19 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MechanicConroller;
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RepairController;
 use App\Http\Controllers\Admin\SparePartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\PDFController;
+use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\VehicleController as ClientVehicleController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,15 +29,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landing.welcome');
-});
+})->name("welcome");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get("change-language/{locale}", [AppController::class, "changeLanguage"])->name("change.lang");
 
-Route::middleware(['auth', "isClient"])->group(function () {
+Route::middleware(['auth', "isClient", "verified"])->group(function () {
+    // client home pafe route 
+    Route::get("/client", [IndexController::class, "index"])->name("client.dashboard");
+
+    Route::resource('client/vehicles', ClientVehicleController::class)->names([
+        'index' => 'client.vehicles',
+        'create' => 'client.vehicles.create',
+        'store' => 'client.vehicles.store',
+        'show' => 'client.vehicle.details',
+        'edit' => 'client.vehicles.edit',
+        'update' => 'client.vehicles.update',
+        'destroy' => 'client.vehicles.destroy',
+    ]);
+});
+
+Route::middleware(['auth', "isMechanic", "verified"])->group(function () {
+});
+
+Route::middleware(['auth', "isAdmin"])->group(function () {
+
+    // Route for notifying the client about a repair
+    Route::post('/admin/notify-client-about-repair', [MailController::class, 'notifyClientAboutRepair'])->name('notify.client.repair');
+
+    // Route for notifying the client about an invoice
+    Route::post('/admin/notify-client-about-invoice', [MailController::class, 'notifyClientAboutInvoice'])->name('notify.client.invoice');
+
 
     // pdf routes
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
@@ -42,9 +67,6 @@ Route::middleware(['auth', "isClient"])->group(function () {
 
     // admin home page routes
     Route::get('/admin', AdminController::class)->name('admin.dashboard');
-
-    // client home page routes
-    Route::get('/client', AdminController::class)->name('client.dashboard');
 
     // custom mechanic routes
     Route::get("/admin/users/mechanics/{mechanic}/repairs", [MechanicConroller::class, "mehcanicRepairs"])->name("mechanic.repairs");
@@ -129,7 +151,7 @@ Route::middleware(['auth', "isClient"])->group(function () {
         'destroy' => 'repairs.destroy',
     ]);
 
-    Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
+    // Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
 });
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware("auth");
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware("auth");

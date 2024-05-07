@@ -110,8 +110,6 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-
-
         return view('admin.vehicles.edit', compact('vehicle'));
     }
 

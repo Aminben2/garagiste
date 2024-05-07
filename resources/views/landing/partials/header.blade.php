@@ -30,10 +30,28 @@
                             class="lg:text-gray-300 text-gray-500 fab fa-github text-lg leading-lg "></i><span
                             class="lg:hidden inline-block ml-2">Star</span></a>
                 </li>
+                @php
+                    $route;
+                @endphp
                 @if (Route::has('login'))
                     @auth
+                        @if (auth()->user()->roles->contains('name', 'admin'))
+                            @php
+                                $route = route('admin.dashboard');
+                            @endphp
+                        @endif
+                        @if (auth()->user()->roles->contains('name', 'client'))
+                            @php
+                                $route = route('client.dashboard');
+                            @endphp
+                        @endif
+                        {{-- @if (auth()->user()->roles->contains('name', 'mechanic'))
+                            @php
+                                $route = route('mechanic.dashboard');
+                            @endphp
+                        @endif --}}
                         <li class="flex items-center">
-                            <a href="{{ url('/dashboard') }}"
+                            <a href="{{ $route }}"
                                 class="bg-white text-gray-800 active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
                                 type="button" style="transition: all 0.15s ease 0s;">
                                 <i class="fas fa-arrow-alt-circle-down"></i> Dashboard

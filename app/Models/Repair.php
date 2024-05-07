@@ -46,4 +46,8 @@ class Repair extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

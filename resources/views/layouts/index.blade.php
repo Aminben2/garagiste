@@ -38,10 +38,10 @@
     <!--wrapper-->
     <div class="wrapper">
         <!--sidebar wrapper -->
-        @include('admin.partials.side-bar')
+        @include('partials.side-bar')
         <!--end sidebar wrapper -->
         <!--start header -->
-        @include('admin.partials.header')
+        @include('partials.header')
         <!--end header -->
         <!--start page wrapper -->
         <div class="page-wrapper">
@@ -58,7 +58,7 @@
         <!--End Back To Top Button-->
     </div>
     <!--end wrapper-->
-    @include('admin.partials.footer')
+    @include('partials.footer')
     <!-- Bootstrap JS -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->

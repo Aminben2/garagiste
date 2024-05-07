@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Exports\RepairsExport;
 use App\Imports\RepairsImport;
+use App\Mail\NotifyClientAboutRepair;
 use App\Models\Invoice;
 use App\Models\Repair;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RepairController extends Controller
@@ -101,6 +103,19 @@ class RepairController extends Controller
 
         $repair->status = $status;
         $repair->save();
+
+        if ($status == 'completed') {
+            $vehicle = $repair->vehicle;
+            $owner = $vehicle->owner;
+
+            $mailData = [
+                "title" => "Repair Completed",
+                "repair_id" => $repair->id,
+                "registration" => $vehicle->registration
+            ];
+            Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
+        }
+
         return response()->json(["status" => $repair->status, 'msg' => 'Status updated successfully']);
     }
     /**
@@ -121,6 +136,18 @@ class RepairController extends Controller
             'title' => 'sometimes|string|max:255',
         ]);
         $repair->update($request->all());
+
+        if ($repair->status == 'completed') {
+            $vehicle = $repair->vehicle;
+            $owner = $vehicle->owner;
+
+            $mailData = [
+                "title" => "Repair Completed",
+                "repair_id" => $repair->id,
+                "registration" => $vehicle->registration
+            ];
+            Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
+        }
         return redirect()->back()->with("status", "Repair updated successfully");
     }
 

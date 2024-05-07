@@ -8,6 +8,7 @@ use App\Imports\InvoiceImport;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
@@ -57,7 +58,19 @@ class InvoiceController extends Controller
         ]);
 
         $invoice = Invoice::create($request->all());
-        return redirect()->back()->with("status", "Invoice created successfully");
+
+        $response = Http::post('/admin/notify-client-about-invoice', [
+            'userEmail' => $invoice->user->email,
+            'invoice_id' => $invoice->id,
+        ]);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+            return redirect()->back()->with("status", "Invoice created successfully and notified client");
+        } else {
+            $errorMessage = $response->body();
+            return redirect()->back()->with("status", "Invoice created successfully but failed to notify client: " . $errorMessage);
+        }
     }
 
     /**
@@ -90,7 +103,17 @@ class InvoiceController extends Controller
         ]);
 
         $invoice->update($request->all());
-        return redirect()->route("invoices")->with("status", "Invoice updated successfully");
+        $response = Http::post('/admin/notify-client-about-invoice', [
+            'userEmail' => $invoice->user->email,
+            'invoice_id' => $invoice->id,
+        ]);
+
+        if ($response->successful()) {
+            return redirect()->route("invoices")->with("status", "Invoice updated successfully and notified client");
+        } else {
+            $errorMessage = $response->body();
+            return redirect()->route("invoices")->with("status", "Invoice updated successfully but failed to notify client: " . $errorMessage);
+        }
     }
     /**
      * Remove the specified resource from storage.

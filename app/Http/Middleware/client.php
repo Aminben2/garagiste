@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfClient
+class client
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class RedirectIfClient
     {
         // Check if the user is authenticated
         if (auth()->check()) {
-            if (!auth()->user()->roles->contains('name', 'admin')) {
+            if (!auth()->user()->roles->contains('name', 'client')) {
                 // Redirect them away from admin area
                 return redirect('/'); // Change this to your desired redirect route
             }

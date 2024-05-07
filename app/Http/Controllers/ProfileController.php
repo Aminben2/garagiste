@@ -16,17 +16,17 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('profile.index', [
             'user' => $request->user(),
         ]);
     }
 
-    public function adminEdit(Request $request): View
-    {
-        return view('admin.profile.index', [
-            'user' => $request->user(),
-        ]);
-    }
+    // public function adminEdit(Request $request): View
+    // {
+    //     return view('admin.profile.index', [
+    //         'user' => $request->user(),
+    //     ]);
+    // }
 
     /**
      * Update the user's profile information.
@@ -41,15 +41,15 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        $hasAdminRole = $request->user()->roles->contains(function ($role) {
-            return $role->name === 'admin';
-        });
+        // $hasAdminRole = $request->user()->roles->contains(function ($role) {
+        //     return $role->name === 'admin';
+        // });
 
-        if ($hasAdminRole && strpos($request->headers->get('referer'), route('admin.dashboard')) !== false) {
-            return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
-        }
+        // if ($hasAdminRole && strpos($request->headers->get('referer'), route('admin.dashboard')) !== false) {
+        //     return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
+        // }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.index')->with('status', 'profile-updated');
     }
 
     /**

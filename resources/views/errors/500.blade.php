@@ -66,7 +66,7 @@
                                         $roles = Auth::user()->roles->pluck('name')->toArray();
                                         $hasAdminRole = in_array('admin', $roles);
                                     @endphp
-                                    <a href="{{ $hasAdminRole ? route('admin.dashboard') : route('dashboard') }}"
+                                    <a href="{{ $hasAdminRole ? route('admin.dashboard') : route('welcome') }}"
                                         class="btn btn-primary btn-lg px-md-5 radius-30">Go Home</a>
 
                                     <a href="{{ url()->previous() }}"

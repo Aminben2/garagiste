@@ -1,20 +1,24 @@
 @extends('layouts.index')
 @section('content')
-    @component('admin.components.break-crump', ['title' => 'Admin Profile', 'page' => 'Edit', 'subpage' => ''])
-    @endcomponent
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 ">
                 <div class="max-w-xl">
 
-                    @component('admin.profile.components.update-profile-form', ['user' => $user])
+                    @component('profile.components.update-profile-form', ['user' => $user])
                     @endcomponent
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 ">
                 <div class="max-w-xl">
-                    @component('admin.profile.components.reset-password-form')
+                    @component('profile.components.reset-password-form')
+                    @endcomponent
+                </div>
+            </div>
+            <div class="p-4 sm:p-8 ">
+                <div class="max-w-xl">
+                    @component('profile.components.delete-acount')
                     @endcomponent
                 </div>
             </div>

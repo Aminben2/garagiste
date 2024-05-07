@@ -34,7 +34,12 @@ class AuthenticatedSessionController extends Controller
         if (in_array('admin', $roles)) {
             return redirect()->intended(route('admin.dashboard'));
         }
-
+        if (in_array('client', $roles)) {
+            return redirect()->intended(route('client.dashboard'));
+        }
+        if (in_array('mechanic', $roles)) {
+            return redirect()->intended(route('mechanic.dashboard'));
+        }
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

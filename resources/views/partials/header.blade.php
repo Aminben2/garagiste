@@ -99,8 +99,7 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item d-flex align-items-center"
-                            href="{{ route('admin.profile.edit') }}"><i
+                    <li><a class="dropdown-item d-flex align-items-center" href="{{ route('profile.edit') }}"><i
                                 class="bx bx-user fs-5"></i><span>{{ __('Profile') }}</span></a>
                     </li>
                     <li>
