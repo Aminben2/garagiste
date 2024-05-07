@@ -106,7 +106,7 @@ class RepairController extends Controller
 
         if ($status == 'completed') {
             $vehicle = $repair->vehicle;
-            $owner = $vehicle->owner;
+            $owner = $vehicle->user;
 
             $mailData = [
                 "title" => "Repair Completed",
@@ -139,7 +139,7 @@ class RepairController extends Controller
 
         if ($repair->status == 'completed') {
             $vehicle = $repair->vehicle;
-            $owner = $vehicle->owner;
+            $owner = $vehicle->user;
 
             $mailData = [
                 "title" => "Repair Completed",

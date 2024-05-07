@@ -75,13 +75,13 @@
                         <div class="col-md-12">
                             <label for="input27" class="form-label">Mechanic Notes</label>
                             <div class="input-group">
-                                <textarea name="description" type="text" class="form-control" id="input27">{{ $repair->description ?? old('description') }}</textarea>
+                                <textarea name="mechanicNotes" type="text" class="form-control" id="input27">{{ $repair->mechanicNotes ?? old('mechanicNotes') }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="input27" class="form-label">Client Notes</label>
                             <div class="input-group">
-                                <textarea name="description" type="text" class="form-control" id="input27">{{ $repair->description ?? old('description') }}</textarea>
+                                <textarea name="clientNotes" type="text" class="form-control" id="input27">{{ $repair->clientNotes ?? old('clientNotes') }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">

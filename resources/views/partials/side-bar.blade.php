@@ -128,6 +128,17 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bx-wrench bx-sm"></i></div>
+                    <div class="menu-title">{{ __('Repairs') }}</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('client.repairs') }}"><i class="bx bx-radio-circle"></i>
+                            {{ __('Repairs') }}</a>
+                    </li>
+                </ul>
+            </li>
         @endif
         @if (auth()->user()->roles->contains('name', 'mechanic'))
         @endif
