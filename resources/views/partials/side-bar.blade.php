@@ -46,7 +46,7 @@
 
                     <div class="parent-icon"><i class="bx bx-user-circle"></i>
                     </div>
-                    <div class="menu-title">{{ __('User management') }}</div>
+                    <div class="menu-title">{{ __('Users') }}</div>
                 </a>
                 <ul>
                     <li> <a href="{{ route('users') }}"><i class="bx bx-radio-circle"></i>{{ __('All users') }}</a>
@@ -69,7 +69,7 @@
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"> <i class="lni lni-car-alt"></i>
                     </div>
-                    <div class="menu-title">{{ __('Vehicle management') }}</div>
+                    <div class="menu-title">{{ __('Vehicles') }}</div>
                 </a>
                 <ul>
                     <li> <a href="{{ route('vehicles') }}"><i class="bx bx-radio-circle"></i>{{ __('Vehicles') }}</a>
@@ -136,6 +136,17 @@
                 <ul>
                     <li><a href="{{ route('client.repairs') }}"><i class="bx bx-radio-circle"></i>
                             {{ __('Repairs') }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bxs-calendar-check bx-sm"></i></div>
+                    <div class="menu-title">{{ __('Appointments') }}</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('client.appointments') }}"><i class="bx bx-radio-circle"></i>
+                            {{ __('Your Appointments') }}</a>
                     </li>
                 </ul>
             </li>

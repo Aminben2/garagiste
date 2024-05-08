@@ -18,10 +18,9 @@ return new class extends Migration
             $table->dateTime('start_datetime');
             $table->dateTime('end_datetime');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('mechanic_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('mechanic_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
-            $table->foreignId('repair_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'in_progress', 'completed', 'canceled', 'rescheduled'])->default('pending');
             $table->timestamps();
         });
     }

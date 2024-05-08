@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SparePartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\PDFController;
+use App\Http\Controllers\Client\AppointmentController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\RepairController as ClientRepairController;
 use App\Http\Controllers\Client\VehicleController as ClientVehicleController;
@@ -49,6 +50,9 @@ Route::middleware(['auth', "isClient", "verified"])->group(function () {
         'destroy' => 'client.vehicles.destroy',
     ]);
 
+    // Custom appointment routes
+    Route::put("client/repairs/{repairId}/addNotes", [ClientRepairController::class, "addNotes"])->name("client.repairs.addNotes");
+    Route::put("client/repairs/{repairId}/editNotes", [ClientRepairController::class, "editNotes"])->name("client.repairs.editNotes");
 
     Route::resource('client/repairs', ClientRepairController::class)->names([
         'index' => 'client.repairs',
@@ -58,6 +62,21 @@ Route::middleware(['auth', "isClient", "verified"])->group(function () {
         'edit' => 'client.repairs.edit',
         'update' => 'client.repairs.update',
         'destroy' => 'client.repairs.destroy',
+    ]);
+
+    // Custom appointment routes
+    Route::put("client/appointments/{appointmentId}/cancel", [AppointmentController::class, "cancel"])->name("client.appointments.cancel");
+
+    Route::get("client/appointments/{appointmentId}/getData", [AppointmentController::class, "getData"])->name("client.appointments.getData");
+
+    Route::resource('client/appointments', AppointmentController::class)->names([
+        'index' => 'client.appointments',
+        'create' => 'client.appointments.create',
+        'store' => 'client.appointments.store',
+        'show' => 'client.appointment.details',
+        'edit' => 'client.appointments.edit',
+        'update' => 'client.appointments.update',
+        'destroy' => 'client.appointments.destroy',
     ]);
 });
 

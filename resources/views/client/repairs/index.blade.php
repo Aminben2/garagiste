@@ -30,14 +30,7 @@
                         </select>
                     </form>
                 </div>
-
-                {{-- <div class="ms-auto">
-                    <a href="{{ route('repairs.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
-                            class="bx bxs-plus-square"></i>Add New
-                        Repair</a>
-                </div> --}}
             </div>
-            {{-- @dd($repairs) --}}
             @if (count($repairs) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">

@@ -35,9 +35,4 @@ class Appointment extends Model
     {
         return $this->belongsTo(Vehicle::class);
     }
-
-    public function repair()
-    {
-        return $this->belongsTo(Repair::class);
-    }
 }

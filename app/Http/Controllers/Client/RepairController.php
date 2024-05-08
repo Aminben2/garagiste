@@ -52,4 +52,28 @@ class RepairController extends Controller
 
         return redirect()->route("client.repairs")->with("status", "Repair updated successfully");
     }
+
+    public function addNotes(Request $request, $repairId)
+    {
+        $request->validate([
+            "clientNotes" => "required|string|max:255",
+        ]);
+        $repair = Repair::find($repairId);
+        $repair->update([
+            'clientNotes' => $repair->clientNotes . "-" . $request->clientNotes,
+        ]);
+        return response()->json($repair);
+    }
+
+    public function editNotes(Request $request, $repairId)
+    {
+        $request->validate([
+            "clientNotes" => "required|string|max:255",
+        ]);
+        $repair = Repair::find($repairId);
+        $repair->update([
+            'clientNotes' => $request->clientNotes,
+        ]);
+        return response()->json($repair);
+    }
 }
