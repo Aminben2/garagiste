@@ -7,10 +7,12 @@ use App\Exports\RepairsExport;
 use App\Imports\RepairsImport;
 use App\Mail\NotifyClientAboutRepair;
 use App\Models\Invoice;
+use App\Models\Notification;
 use App\Models\Repair;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -113,6 +115,14 @@ class RepairController extends Controller
                 "repair_id" => $repair->id,
                 "registration" => $vehicle->registration
             ];
+
+            Notification::create([
+                "user_id" => $vehicle->user_id,
+                "title" => $mailData['title'],
+                "content" => "Your vehicle " . $vehicle->registration . " repair is done, you can come to our warehouse to cheock it out",
+            ]);
+
+
             Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
         }
 
@@ -146,6 +156,13 @@ class RepairController extends Controller
                 "repair_id" => $repair->id,
                 "registration" => $vehicle->registration
             ];
+
+
+            Notification::create([
+                "user_id" => $vehicle->user_id,
+                "title" => $mailData['title'],
+                "content" => "Your vehicle " . $vehicle->registration . " repair is done, you can come to our warehouse to cheock it out",
+            ]);
             Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
         }
         return redirect()->back()->with("status", "Repair updated successfully");

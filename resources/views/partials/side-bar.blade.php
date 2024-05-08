@@ -131,7 +131,7 @@
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-wrench bx-sm"></i></div>
-                    <div class="menu-title">{{ __('Repairs') }}</div>
+                    <div class="menu-title">{{ __('Your Repairs') }}</div>
                 </a>
                 <ul>
                     <li><a href="{{ route('client.repairs') }}"><i class="bx bx-radio-circle"></i>
@@ -142,7 +142,7 @@
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bxs-calendar-check bx-sm"></i></div>
-                    <div class="menu-title">{{ __('Appointments') }}</div>
+                    <div class="menu-title">{{ __(' Your Appointments') }}</div>
                 </a>
                 <ul>
                     <li><a href="{{ route('client.appointments') }}"><i class="bx bx-radio-circle"></i>

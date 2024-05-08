@@ -45,7 +45,7 @@ class AppointmentController extends Controller
         return view("client.appointments.edit", compact("appointment"));
     }
 
-    public function update(Request $request, Appointment $appointment)
+    public function update(Request $request, $appointment)
     {
         $request->validate([
             'description' => 'sometimes|string|max:255',
@@ -54,7 +54,8 @@ class AppointmentController extends Controller
             "end_datetime" => "sometimes|date",
             'vehicle_id' => 'required|exists:vehicles,id',
         ]);
-        $appointment->update($request->all());
+        $appointmentObj = Appointment::find($appointment);
+        $appointmentObj->update($request->all());
 
         return redirect()->route("client.appointments")->with("status", "Appointment updated successfully");
     }

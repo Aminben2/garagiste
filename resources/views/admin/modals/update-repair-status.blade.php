@@ -62,8 +62,6 @@
                     statusContainer.innerHTML = data.status
                 }
             } else {
-                console.log("bad");
-                console.log(data.error);
                 if (errorsContainer) {
                     errorsContainer.innerHTML = ""
                     errorsContainer.innerHTML = data.error

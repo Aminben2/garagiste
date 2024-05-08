@@ -6,8 +6,9 @@
                 <h5 class="modal-title" id="editModalLabel">Edit Appointment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="" id="editModalForm">
                 @csrf
+                @method('PUT')
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="etitle" class="form-label">Title</label>
@@ -41,7 +42,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button id="updateBtn" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -53,12 +54,15 @@
             const startData = document.getElementById('estart_datetime')
             const endDate = document.getElementById('eend_datetime')
             const vehicle = document.getElementById('evehicle_id')
+            const updateBtn = document.getElementById("updateBtn")
+            const form = document.getElementById('editModalForm');
 
             const editButtons = document.querySelectorAll('.edit-btn');
             editButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    console.log("called");
                     const appId = button.getAttribute('data-appointment-id');
+
+                    form.action = '/client/appointments/' + appId;
                     fetch('/client/appointments/' + appId + '/getData')
                         .then(response => response.json())
                         .then(data => {

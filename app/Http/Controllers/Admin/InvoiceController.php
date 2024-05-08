@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Exports\InvoicesExport;
 use App\Imports\InvoiceImport;
 use App\Models\Invoice;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -59,18 +60,19 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($request->all());
 
-        $response = Http::post('/admin/notify-client-about-invoice', [
+        $mailData = [
             'userEmail' => $invoice->user->email,
             'invoice_id' => $invoice->id,
+        ];
+        $mailData['title'] = "Your invoice is ready to be payed";
+
+        Notification::create([
+            "user_id" => $invoice->user_id,
+            "title" => $mailData['title'],
+            "content" => "Your invoice for repair is ready to be payed ,plaese pay it before it is too late",
         ]);
 
-        if ($response->successful()) {
-            $responseData = $response->json();
-            return redirect()->back()->with("status", "Invoice created successfully and notified client");
-        } else {
-            $errorMessage = $response->body();
-            return redirect()->back()->with("status", "Invoice created successfully but failed to notify client: " . $errorMessage);
-        }
+        return redirect()->back()->with("status", "Invoice created successfully and notified client");;
     }
 
     /**
@@ -103,17 +105,20 @@ class InvoiceController extends Controller
         ]);
 
         $invoice->update($request->all());
-        $response = Http::post('/admin/notify-client-about-invoice', [
+
+        $mailData = [
             'userEmail' => $invoice->user->email,
             'invoice_id' => $invoice->id,
+        ];
+        $mailData['title'] = "Your invoice is ready to be payed";
+
+        Notification::create([
+            "user_id" => $invoice->user_id,
+            "title" => $mailData['title'],
+            "content" => "Your invoice for repair is ready to be payed ,plaese pay it before it is too late",
         ]);
 
-        if ($response->successful()) {
-            return redirect()->route("invoices")->with("status", "Invoice updated successfully and notified client");
-        } else {
-            $errorMessage = $response->body();
-            return redirect()->route("invoices")->with("status", "Invoice updated successfully but failed to notify client: " . $errorMessage);
-        }
+        return redirect()->route("invoices")->with("status", "Invoice updated successfully and notified client");
     }
     /**
      * Remove the specified resource from storage.
