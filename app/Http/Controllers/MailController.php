@@ -14,7 +14,6 @@ class MailController extends Controller
 {
     public function notifyClientAboutRepair(Request $request)
     {
-        dd("amine");
         $mailData = $request->validate([
             'userEmail' => 'required|email',
             'vehicle_id' => 'required',

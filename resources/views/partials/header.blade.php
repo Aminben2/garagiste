@@ -49,18 +49,18 @@
                     </li>
                     <li class="nav-item dropdown dropdown-large">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
-                            data-bs-toggle="dropdown"><span class="alert-count">7</span>
+                            data-bs-toggle="dropdown"><span class="alert-count" id="count">0</span>
                             <i class='bx bx-bell'></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a href="javascript:;">
                                 <div class="msg-header">
                                     <p class="msg-header-title">{{ __('Notifications') }}</p>
-                                    <p class="msg-header-badge">8 {{ __('New') }}</p>
+                                    <p class="msg-header-badge"><span id="new">0</span> {{ __('New') }}</p>
                                 </div>
                             </a>
-                            <div class="header-notifications-list">
-                                <a class="dropdown-item" href="javascript:;">
+                            <div class="header-notifications-list" id="notifications-list">
+                                {{-- <a class="dropdown-item" href="javascript:;">
                                     <div class="d-flex align-items-center">
                                         <div class="user-online">
                                             <img src="{{ asset('assets/images/avatars/avatar-1.png') }}"
@@ -73,7 +73,7 @@
                                             <p class="msg-info">The standard chunk of lorem</p>
                                         </div>
                                     </div>
-                                </a>
+                                </a> --}}
                             </div>
                             <a href="javascript:;">
                                 <div class="text-center msg-footer">
@@ -127,6 +127,42 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
+        });
+        const count = document.getElementById('count');
+        const newNotif = document.getElementById('new');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setInterval(function() {
+                fetch('/client/notifications')
+                    .then(response => response.json())
+                    .then(data => {
+                        let notificationsDiv = document.getElementById('notifications-list');
+                        notificationsDiv.innerHTML = '';
+                        count.innerHTML = data.notifications.length;
+                        newNotif.innerHTML = data.notifications.length;
+                        console.log(data.notifications);
+                        data.notifications.forEach(notification => {
+                            let div = document.createElement('div');
+                            div.className = 'dropdown-item';
+                            div.innerHTML = `
+                                <div class="d-flex align-items-center">
+                                    <div class="user-online">
+                                        <img src="{{ asset('assets/images/logo-icon.png') }}"
+                                            class="msg-avatar" alt="user">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="msg-name">${notification.title} <span class="msg-time float-end">${new Date(notification.created_at).toLocaleString()}</span></h6>
+                                        <p class="msg-info">${notification.content.length > 20 ? notification.content.substring(0, 20) + '...' : notification.content}</p>
+                                    </div>
+                                </div>
+                            `;
+                            notificationsDiv.appendChild(div);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }, 5000);
         });
     </script>
 </header>

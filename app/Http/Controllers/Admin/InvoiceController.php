@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Exports\InvoicesExport;
 use App\Imports\InvoiceImport;
+use App\Mail\NotifyClientAboutRepair;
 use App\Models\Invoice;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
@@ -72,6 +74,8 @@ class InvoiceController extends Controller
             "content" => "Your invoice for repair is ready to be payed ,plaese pay it before it is too late",
         ]);
 
+        Mail::to($invoice->user->email)->send(new NotifyClientAboutRepair($mailData));
+
         return redirect()->back()->with("status", "Invoice created successfully and notified client");;
     }
 
@@ -117,6 +121,8 @@ class InvoiceController extends Controller
             "title" => $mailData['title'],
             "content" => "Your invoice for repair is ready to be payed ,plaese pay it before it is too late",
         ]);
+
+        Mail::to($invoice->user->email)->send(new NotifyClientAboutRepair($mailData));
 
         return redirect()->route("invoices")->with("status", "Invoice updated successfully and notified client");
     }

@@ -17,7 +17,6 @@ class Appointment extends Model
         'user_id',
         'mechanic_id',
         'vehicle_id',
-        'repair_id',
         'status',
     ];
 

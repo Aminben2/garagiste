@@ -28,7 +28,7 @@
                     @if ($role === 'client')
                         <li>
                             <a href="{{ route('client.dashboard') }}"><i
-                                    class="bx bx-radio-circle"></i>{{ __('Stats') }}</a>
+                                    class="bx bx-radio-circle"></i>{{ __('Your Stats') }}</a>
                         </li>
                     @endif
                     {{-- @if ($role === 'mechanic')
@@ -147,6 +147,17 @@
                 <ul>
                     <li><a href="{{ route('client.appointments') }}"><i class="bx bx-radio-circle"></i>
                             {{ __('Your Appointments') }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bx-receipt"></i></div>
+                    <div class="menu-title">{{ __(' Your Invoives') }}</div>
+                </a>
+                <ul>
+                    <li><a href="/client/invoices"><i class="bx bx-radio-circle"></i>
+                            {{ __('Your Invoices') }}</a>
                     </li>
                 </ul>
             </li>

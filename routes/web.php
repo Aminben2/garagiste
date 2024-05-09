@@ -10,9 +10,11 @@ use App\Http\Controllers\Admin\RepairController;
 use App\Http\Controllers\Admin\SparePartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VehicleController;
-use App\Http\Controllers\Admin\PDFController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Client\AppointmentController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\InvoiceController as ClientInvoiceController;
+use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\RepairController as ClientRepairController;
 use App\Http\Controllers\Client\VehicleController as ClientVehicleController;
 use App\Http\Controllers\MailController;
@@ -37,6 +39,13 @@ Route::get('/', function () {
 Route::get("change-language/{locale}", [AppController::class, "changeLanguage"])->name("change.lang");
 
 Route::middleware(['auth', "isClient", "verified"])->group(function () {
+
+    // PDFs routes
+    Route::get('/client/pdfs/invoicePDF/{invoiceId}', [PDFController::class, 'generateInvoicePDF']);
+
+    // client notifications route
+    Route::get("/client/notifications", [NotificationController::class, "clientNotifications"])->name("client.notifications");
+
     // client home pafe route 
     Route::get("/client", [IndexController::class, "index"])->name("client.dashboard");
 
@@ -78,6 +87,11 @@ Route::middleware(['auth', "isClient", "verified"])->group(function () {
         'update' => 'client.appointments.update',
         'destroy' => 'client.appointments.destroy',
     ]);
+
+    // invoice Routes
+    Route::get("client/invoices", [ClientInvoiceController::class, "index"]);
+    Route::get("client/invoices/{invoiceId}", [ClientInvoiceController::class, "show"])->name("client.invoice.show");
+    Route::put("client/invoices/{invoiceId}/pay", [ClientInvoiceController::class, "pay"])->name("client.invoice.pay");
 });
 
 Route::middleware(['auth', "isMechanic", "verified"])->group(function () {
@@ -90,7 +104,6 @@ Route::middleware(['auth', "isAdmin"])->group(function () {
 
     // Route for notifying the client about an invoice
     Route::post('/admin/notify-client-about-invoice', [MailController::class, 'notifyClientAboutInvoice'])->name('notify.client.invoice');
-
 
     // pdf routes
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
@@ -182,7 +195,13 @@ Route::middleware(['auth', "isAdmin"])->group(function () {
         'destroy' => 'repairs.destroy',
     ]);
 
-    // Route::get('/admin/profile', [ProfileController::class, 'adminEdit'])->name('admin.profile.edit');
+    Route::resource('admin/appointments', AppointmentController::class)->names([
+        'index' => 'appointments',
+        'show' => 'appointment.details',
+        'edit' => 'appointments.edit',
+        'update' => 'appointments.update',
+        'destroy' => 'appointments.destroy',
+    ]);
 });
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware("auth");
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware("auth");

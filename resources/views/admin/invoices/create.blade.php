@@ -23,7 +23,7 @@
                                     <label for="input26" class="form-label">Additional Charge</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-cash-coin"></i></span>
-                                        <input name="additionalCharge" type="text" class="form-control"
+                                        <input name="additionalCharges" type="text" class="form-control"
                                             id="input26" placeholder="Additional Charge"
                                             value="{{ old('additionalCharge') }}">
                                     </div>
