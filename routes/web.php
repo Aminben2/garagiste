@@ -20,6 +20,7 @@ use App\Http\Controllers\Client\RepairController as ClientRepairController;
 use App\Http\Controllers\Client\VehicleController as ClientVehicleController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Mechanic\RepairController as MechanicRepairController;
+use App\Http\Controllers\Mechanic\VehicleController as MechanicVehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -108,9 +109,14 @@ Route::middleware(['auth', "isMechanic"])->group(function () {
         'destroy' => 'mechanic.repairs.destroy',
     ]);
 
+    // coustom vehicles routes
+    Route::get("mechanic/vehicles/", [MechanicVehicleController::class, "index"])->name("mechanic.for.vehicles");
+    Route::get("mechanic/vehicles/{vehicle}", [MechanicVehicleController::class, "show"])->name("mechanic.vehicle.details");
+
     // Custom repairs routes
     Route::put("mechanic/repairs/{repairId}/addNotes", [MechanicRepairController::class, "addNotes"])->name("mechanic.repairs.addNotes");
     Route::put("mechanic/repairs/{repairId}/editNotes", [MechanicRepairController::class, "editNotes"])->name("mechanic.repairs.editNotes");
+    Route::put("/mechanic/repairs/updateStatus/{repairId}/{status}", [MechanicRepairController::class, "updateStatus"]);
 });
 
 Route::middleware(['auth', "isAdmin"])->group(function () {

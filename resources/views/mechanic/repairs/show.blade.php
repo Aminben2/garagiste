@@ -15,7 +15,12 @@
                                 <tr>
                                     <th scope="row" class="border-0">Status</th>
                                     <td class="border-0">
-                                        <span>{{ $repair->status }}</span>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span id="statusContainer">{{ $repair->status }}</span>
+                                            <button class="btn btn-sm btn-primary ml-2" data-bs-toggle="modal"
+                                                data-bs-target="#updateStatusModal"
+                                                onclick="showUpdateModal({{ $repair->id }})">Edit</button>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -114,7 +119,12 @@
         </div>
         @include('mechanic.modals.add-notes-modal')
         @include('mechanic.modals.edit-notes-modal')
+        @include('mechanic.modals.update-repair-status')
         <script>
+            function showUpdateModal(id) {
+                document.getElementById('updateForm').action = "/mechanic/repairs/updateStatus/" + id
+            }
+
             function saveNotes() {
                 const notes = document.getElementById('mechanicNotes').value;
                 const repairId = '{{ $repair->id }}';

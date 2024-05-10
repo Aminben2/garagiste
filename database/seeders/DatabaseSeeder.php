@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Repair;
 use App\Models\Role;
 use App\Models\SparePart;
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
 
@@ -20,14 +21,14 @@ class DatabaseSeeder extends Seeder
     {
         $roles = Role::all();
 
-        \App\Models\User::factory(10)->create()->each(function ($user) use ($roles) {
+        User::factory(10)->create()->each(function ($user) use ($roles) {
             $randomRoleId = $roles->random(1)->first()->id;
             $user->roles()->attach($randomRoleId);
         });
 
 
         // Fill user_roles table
-        $users = \App\Models\User::all();
+        $users = User::all();
         $users->each(function ($user) use ($roles) {
             $userRoles = $roles->random(rand(1, $roles->count()))->pluck('id')->toArray();
             $user->roles()->sync($userRoles);
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $users = \App\Models\User::all();
+        $users = User::all();
 
         foreach ($users as $user) {
             $user->vehicles()->saveMany(
@@ -52,20 +53,25 @@ class DatabaseSeeder extends Seeder
             $invoice->save();
         });
 
-        $users = \App\Models\User::all();
+        $users = User::all();
 
 
         SparePart::factory()->count(100)->create();
 
         $invoices = Invoice::all();
         $cars = Vehicle::all();
+        $mechanics = User::whereHas('roles', function ($query) {
+            $query->where('name', 'mechanic');
+        })->get();
 
-        Repair::factory()->count(50)->create()->each(function ($repair) use ($invoices, $cars) {
+        Repair::factory()->count(50)->create()->each(function ($repair) use ($invoices, $mechanics, $cars) {
             $randomInvoice = $invoices->random();
             $randomCar = $cars->random();
+            $randomMechanic = $mechanics->random();
 
             $repair->invoice_id = $randomInvoice->id;
             $repair->vehicle_id = $randomCar->id;
+            $repair->mechanic_id = $randomMechanic->id;
             $repair->save();
         });
         $spareParts = SparePart::all();

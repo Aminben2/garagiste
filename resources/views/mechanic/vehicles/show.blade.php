@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('content')
-    @component('client.components.break-crump', [
+    @component('client.components.location', [
         'title' => 'Vehicle Management',
         'page' => 'Vehicle Detail',
         'subpage' => '',
@@ -76,9 +76,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <a href="{{ route('vehicles.edit', $vehicle) }}" class="btn btn-primary">Edit Vehicle</a>
-                    </div>
                 </div>
             </div>
 
@@ -94,10 +91,10 @@
                                         <th>Description</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Mechanic</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach ($repairs as $r)
                                         <tr>
                                             <td>{{ $r->id }}</td>
@@ -108,6 +105,7 @@
                                             </td>
                                             <td>{{ $r->startDate }}</td>
                                             <td>{{ $r->endDate }}</td>
+                                            <td>{{ $r->mechanic->username ?? 'Not Assigned' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

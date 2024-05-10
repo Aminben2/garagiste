@@ -186,6 +186,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bx-wrench bx-sm"></i></div>
+                    <div class="menu-title">{{ __('Vehicles to repair') }}</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('mechanic.for.vehicles') }}"><i class="bx bx-radio-circle"></i>
+                            {{ __('Vehicles') }}</a>
+                    </li>
+                </ul>
+            </li>
         @endif
     </ul>
     <!--end navigation-->

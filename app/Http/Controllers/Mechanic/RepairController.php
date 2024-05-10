@@ -172,6 +172,7 @@ class RepairController extends Controller
         return response()->json($repair);
     }
 
+
     public function editNotes(Request $request, $repairId)
     {
         $request->validate([
