@@ -19,6 +19,7 @@ use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\RepairController as ClientRepairController;
 use App\Http\Controllers\Client\VehicleController as ClientVehicleController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\Mechanic\RepairController as MechanicRepairController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,7 +61,7 @@ Route::middleware(['auth', "isClient", "verified"])->group(function () {
         'destroy' => 'client.vehicles.destroy',
     ]);
 
-    // Custom appointment routes
+    // Custom repairs routes
     Route::put("client/repairs/{repairId}/addNotes", [ClientRepairController::class, "addNotes"])->name("client.repairs.addNotes");
     Route::put("client/repairs/{repairId}/editNotes", [ClientRepairController::class, "editNotes"])->name("client.repairs.editNotes");
 
@@ -95,7 +96,21 @@ Route::middleware(['auth', "isClient", "verified"])->group(function () {
     Route::put("client/invoices/{invoiceId}/pay", [ClientInvoiceController::class, "pay"])->name("client.invoice.pay");
 });
 
-Route::middleware(['auth', "isMechanic", "verified"])->group(function () {
+// removed the middleware "verified" to do some testing
+Route::middleware(['auth', "isMechanic"])->group(function () {
+    Route::resource('mechanic/repairs', MechanicRepairController::class)->names([
+        'index' => 'mechanic.for.repairs',
+        'create' => 'mechanic.repairs.create',
+        'store' => 'mechanic.repairs.store',
+        'show' => 'mechanic.repair.details',
+        'edit' => 'mechanic.repairs.edit',
+        'update' => 'mechanic.repairs.update',
+        'destroy' => 'mechanic.repairs.destroy',
+    ]);
+
+    // Custom repairs routes
+    Route::put("mechanic/repairs/{repairId}/addNotes", [MechanicRepairController::class, "addNotes"])->name("mechanic.repairs.addNotes");
+    Route::put("mechanic/repairs/{repairId}/editNotes", [MechanicRepairController::class, "editNotes"])->name("mechanic.repairs.editNotes");
 });
 
 Route::middleware(['auth', "isAdmin"])->group(function () {

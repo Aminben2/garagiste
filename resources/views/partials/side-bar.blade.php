@@ -175,6 +175,17 @@
             </li>
         @endif
         @if (auth()->user()->roles->contains('name', 'mechanic'))
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bx-wrench bx-sm"></i></div>
+                    <div class="menu-title">{{ __('Repairs to do') }}</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('mechanic.for.repairs') }}"><i class="bx bx-radio-circle"></i>
+                            {{ __('Repairs') }}</a>
+                    </li>
+                </ul>
+            </li>
         @endif
     </ul>
     <!--end navigation-->

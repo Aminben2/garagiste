@@ -83,12 +83,9 @@
                             <p>{{ $repair->description }}</p>
                         </div>
                         <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-                            <p>{{ $repair->mechanicNotes }}</p>
-                        </div>
-                        <div class="tab-pane fade" id="primarycontact" role="tabpanel">
                             <div class="d-flex align-items-center">
-                                <p id="notes" class="flex-grow-1">
-                                    @foreach (explode('-', $repair->clientNotes) as $note)
+                                <p id="mnotes" class="flex-grow-1">
+                                    @foreach (explode('-', $repair->mechanicNotes) as $note)
                                         <span class="d-block">{{ $note }}</span>
                                     @endforeach
                                 </p>
@@ -102,35 +99,42 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="primarycontact" role="tabpanel">
+                            <div class="d-flex align-items-center">
+                                <p id="notes" class="flex-grow-1">
+                                    @foreach (explode('-', $repair->clientNotes) as $note)
+                                        <span class="d-block">{{ $note }}</span>
+                                    @endforeach
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('client.modals.add-notes-modal')
-        @include('client.modals.edit-notes-modal')
+        @include('mechanic.modals.add-notes-modal')
+        @include('mechanic.modals.edit-notes-modal')
         <script>
             function saveNotes() {
-                const notes = document.getElementById('clientNotes').value;
+                const notes = document.getElementById('mechanicNotes').value;
                 const repairId = '{{ $repair->id }}';
-                fetch(`/client/repairs/${repairId}/addNotes`, {
+                fetch(`/mechanic/repairs/${repairId}/addNotes`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                         },
                         body: JSON.stringify({
-                            clientNotes: notes
+                            mechanicNotes: notes
                         })
                     })
                     .then((response) => {
                         if (response.ok) {
-                            document.getElementById('clientNotes').value = '';
-                            document.getElementById('notes').innerHTML += notes;
+                            document.getElementById('mechanicNotes').value = '';
+                            document.getElementById('mnotes').innerHTML += notes;
                             const modal = document.getElementById('notesModal');
                             const modalInstance = bootstrap.Modal.getInstance(modal);
                             modalInstance.hide();
-
-                            console.log('Notes saved');
                         } else {
                             console.log('Error while saving notes');
                         }
@@ -140,20 +144,20 @@
             function saveModalNotes() {
                 const notes = document.getElementById('modalNotes').value;
                 const repairId = '{{ $repair->id }}';
-                fetch(`/client/repairs/${repairId}/editNotes`, {
+                fetch(`/mechanic/repairs/${repairId}/editNotes`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                         },
                         body: JSON.stringify({
-                            clientNotes: notes
+                            mechanicNotes: notes
                         })
                     })
                     .then((response) => {
                         if (response.ok) {
                             document.getElementById('modalNotes').value = '';
-                            document.getElementById('notes').innerHTML = notes;
+                            document.getElementById('mnotes').innerHTML = notes;
                             const modal = document.getElementById('exampleModal');
                             const modalInstance = bootstrap.Modal.getInstance(modal);
                             modalInstance.hide();
