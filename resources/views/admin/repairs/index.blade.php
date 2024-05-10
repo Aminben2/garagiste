@@ -26,6 +26,19 @@
                 @component('admin.components.search-bar', ['route' => route('repairs'), 'searchItem' => 'repair'])
                 @endcomponent
                 <div class="ms-auto">
+                    <form action="{{ route('repairs') }}">
+                        <select name="repair_status" id="repair_status" class="form-select" onchange="this.form.submit()">
+                            <option value="">All Statuses</option>
+                            <option value="pending" {{ request()->repair_status == 'pending' ? 'selected' : '' }}>Pending
+                            </option>
+                            <option value="in progress" {{ request()->repair_status == 'in progress' ? 'selected' : '' }}>In
+                                Progress</option>
+                            <option value="completed" {{ request()->repair_status == 'completed' ? 'selected' : '' }}>
+                                Completed</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="ms-auto">
                     <a href="{{ route('repairs.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i
                             class="bx bxs-plus-square"></i>Add New
                         Repair</a>
@@ -107,7 +120,12 @@
                                                     </div>
                                                 </div>
                                             </form>
-
+                                            @if (!$repair->mechanic)
+                                                <button title="Assign" data-bs-toggle="modal"
+                                                    data-bs-target="#selectMechanicModal"
+                                                    onclick="selectMechanic({{ $repair->id }})"
+                                                    class="btn btn-sm btn-primary">Assign</button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -115,10 +133,18 @@
                         </tbody>
                     </table>
                 </div>
+                @include('admin.modals.select-mechanic')
+                <script>
+                    function selectMechanic(id) {
+                        const confirmForm = document.getElementById('confirmForm');
+                        confirmForm.action = `/admin/repairs/${id}/assign`;
+                    }
+                </script>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
                     <div class="text-white">There are no repairs!</div>
                 </div>
             @endif
         </div>
+
     @endsection

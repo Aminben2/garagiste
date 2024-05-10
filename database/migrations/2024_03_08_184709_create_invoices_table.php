@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->decimal('additionalCharges', 10, 2)->nullable();
-            $table->decimal('totalAmount', 10, 2);
+            $table->decimal('totalAmount', 10, 2)->nullable();
             $table->unsignedBigInteger("user_id")->nullable();
             $table->date("dueDate")->nullable();
             $table->longText("description")->nullable();

@@ -140,7 +140,6 @@
                         notificationsDiv.innerHTML = '';
                         count.innerHTML = data.notifications.length;
                         newNotif.innerHTML = data.notifications.length;
-                        console.log(data.notifications);
                         data.notifications.forEach(notification => {
                             let div = document.createElement('div');
                             div.className = 'dropdown-item';

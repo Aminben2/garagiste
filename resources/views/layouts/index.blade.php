@@ -93,7 +93,7 @@
         setTimeout(function() {
             document.getElementById('successAlert').style.opacity = 0;
             setTimeout(function() {
-                admin document.getElementById('successAlert').style.display = 'none';
+                document.getElementById('successAlert').style.display = 'none';
             }, 500);
         }, 5000);
     </script>

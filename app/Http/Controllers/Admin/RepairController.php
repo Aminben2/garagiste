@@ -23,8 +23,26 @@ class RepairController extends Controller
      */
     public function index()
     {
+        $search = request()->input('search');
+        $status = request()->query('repair_status');
         $repairs = Repair::all();
-        return view("admin.repairs.index", compact("repairs"));
+
+        if ($search) {
+            $repairs = $repairs->filter(function ($repair) use ($search) {
+                return stristr($repair->description, $search) || stristr($repair->title, $search);
+            });
+        }
+
+        if ($status) {
+            $repairs = $repairs->filter(function ($repair) use ($status) {
+                return $repair->status === $status;
+            });
+        }
+        $mechanics = User::whereHas('roles', function ($query) {
+            $query->where('name', 'mechanic');
+        })->get();
+
+        return view("admin.repairs.index", compact("repairs", "mechanics"));
     }
 
     public function export()
@@ -96,17 +114,20 @@ class RepairController extends Controller
 
     public function updateStatus($repairId, $status)
     {
-
         if (!$status) {
             return response()->json(["error" => "status required"]);
         }
-
         $repair = Repair::find($repairId);
 
-        $repair->status = $status;
-        $repair->save();
-
         if ($status == 'completed') {
+            $invoice = Invoice::create([
+                "user_id" => $repair->user_id,
+                "totalAmount" => $repair->workPrice,
+                "description" => "Repair for vehicle " . $repair->vehicle->registration
+            ]);
+
+            $repair->invoice_id = $invoice->id;
+
             $vehicle = $repair->vehicle;
             $owner = $vehicle->user;
 
@@ -121,11 +142,10 @@ class RepairController extends Controller
                 "title" => $mailData['title'],
                 "content" => "Your vehicle " . $vehicle->registration . " repair is done, you can come to our warehouse to cheock it out",
             ]);
-
-
             Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
         }
-
+        $repair->status = $status;
+        $repair->save();
         return response()->json(["status" => $repair->status, 'msg' => 'Status updated successfully']);
     }
     /**
@@ -148,16 +168,24 @@ class RepairController extends Controller
         $repair->update($request->all());
 
         if ($repair->status == 'completed') {
+            if (!$repair->invoice_id) {
+                $invoice = Invoice::create([
+                    "user_id" => $repair->user_id,
+                    "totalAmount" => $repair->workPrice,
+                    "description" => "Repair for vehicle " . $repair->vehicle->registration
+                ]);
+
+                $repair->invoice_id = $invoice->id;
+                $repair->save();
+            }
+
             $vehicle = $repair->vehicle;
             $owner = $vehicle->user;
-
             $mailData = [
                 "title" => "Repair Completed",
                 "repair_id" => $repair->id,
                 "registration" => $vehicle->registration
             ];
-
-
             Notification::create([
                 "user_id" => $vehicle->user_id,
                 "title" => $mailData['title'],
@@ -166,6 +194,23 @@ class RepairController extends Controller
             Mail::to($owner->email)->send(new NotifyClientAboutRepair($mailData));
         }
         return redirect()->back()->with("status", "Repair updated successfully");
+    }
+
+    public function assign(Request $request, $repairId)
+    {
+        $request->validate([
+            "mechanic_id" => "required",
+        ]);
+        $repair = Repair::find($repairId);
+
+        if ($repair->mechanic_id) {
+            return redirect()->back()->with("status", "Repair$repair already assigned");
+        }
+        $repair->update([
+            "mechanic_id" => $request->mechanic_id,
+        ]);
+
+        return redirect()->back()->with("status", "Repair assigned successfully");
     }
 
     /**

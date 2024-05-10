@@ -20,9 +20,9 @@ return new class extends Migration
             $table->dateTime('endDate')->nullable();
             $table->text('mechanicNotes')->nullable();
             $table->text('clientNotes')->nullable();
-            $table->decimal('workPrice', 10, 2);
+            $table->decimal('workPrice', 10, 2)->nullable();
             $table->integer("hours")->nullable();
-            $table->decimal('hourPrice', 10, 2);
+            $table->decimal('hourPrice', 10, 2)->nullable();
             $table->unsignedBigInteger('vehicle_id')->nullable();
             $table->unsignedBigInteger('invoice_id')->nullable();
             $table->unsignedBigInteger('mechanic_id')->nullable();

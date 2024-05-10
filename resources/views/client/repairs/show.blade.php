@@ -20,19 +20,23 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="border-0">Work Price</th>
-                                    <td class="border-0">{{ $repair->workPrice }}</td>
+                                    <td class="border-0">{{ $repair->workPrice ?: 'n/a' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="border-0">Hours</th>
-                                    <td class="border-0">{{ $repair->hours }}</td>
+                                    <td class="border-0">{{ $repair->hours ?: 'n/a' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="border-0">Hour Price</th>
-                                    <td class="border-0">{{ $repair->hourPrice }}</td>
+                                    <td class="border-0">{{ $repair->hourPrice ?: 'n/a' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="border-0">Start Date</th>
+                                    <td class="border-0">{{ $repair->startDate ?: 'n/a' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="border-0">End Date</th>
-                                    <td class="border-0">{{ $repair->endDate }}</td>
+                                    <td class="border-0">{{ $repair->endDate ?: 'n/a' }}</td>
                                 </tr>
                             </tbody>
                         </table>

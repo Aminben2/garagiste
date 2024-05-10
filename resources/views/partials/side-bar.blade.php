@@ -113,6 +113,18 @@
                             {{ __('Add Repair') }}</a></li>
                 </ul>
             </li>
+
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bx bxs-calendar-check bx-sm"></i></div>
+                    <div class="menu-title">{{ __('Appointments') }}</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('appointments') }}"><i class="bx bx-radio-circle"></i>
+                            {{ __('Appointments') }}</a>
+                    </li>
+                </ul>
+            </li>
         @endif
         @if (auth()->user()->roles->contains('name', 'client'))
             <li>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Client\AppointmentController;
+use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\InvoiceController as ClientInvoiceController;
 use App\Http\Controllers\Client\NotificationController;
@@ -195,13 +196,22 @@ Route::middleware(['auth', "isAdmin"])->group(function () {
         'destroy' => 'repairs.destroy',
     ]);
 
-    Route::resource('admin/appointments', AppointmentController::class)->names([
+    // custom repair routes 
+    Route::put("/admin/repairs/{repairId}/assign", [RepairController::class, "assign"])->name("repair.assign");
+
+    Route::resource('admin/appointments', AdminAppointmentController::class)->names([
         'index' => 'appointments',
         'show' => 'appointment.details',
         'edit' => 'appointments.edit',
         'update' => 'appointments.update',
         'destroy' => 'appointments.destroy',
     ]);
+
+    // custom appointments routes
+    Route::put("/admin/appointments/{appointmentId}/cancel", [AdminAppointmentController::class, "cancel"])->name("appointment.cancel");
+    Route::put("/admin/appointments/{appointmentId}/confirm", [AdminAppointmentController::class, "confirm"])->name("appointment.confirm");
+    Route::post("/admin/appointments/{appointment}/sendEmail", [AdminAppointmentController::class, "sendEmail"])->name("notify.client");
+    Route::put("/admin/appointments/{appointmentId}/assign", [AdminAppointmentController::class, "assign"])->name("appointment.assign");
 });
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware("auth");
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware("auth");
