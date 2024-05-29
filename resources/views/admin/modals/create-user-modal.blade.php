@@ -185,7 +185,6 @@
                     console.error('Error creating user details:', error);
                 }
             });
-
         });
     </script>
 

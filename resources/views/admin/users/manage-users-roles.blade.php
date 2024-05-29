@@ -1,10 +1,9 @@
 @extends('layouts.index')
 @section('content')
-    @component('admin.components.break-crump', [
+    @component('client.components.location', [
         'title' => 'User Management',
         'page' => 'Users',
         'subpage' => 'Manage Roles',
-        'exportRoute' => route('users.export'),
     ])
     @endcomponent
     <div class="card">

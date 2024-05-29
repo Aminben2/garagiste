@@ -157,12 +157,6 @@ Route::middleware(['auth', "isAdmin"])->group(function () {
     Route::post('/admin/vehicles/vehicles-import', [VehicleController::class, 'import'])->name('vehicles.import');
     Route::post('/admin/spareParts/spareParts-import', [SparePartController::class, 'import'])->name('spareParts.import');
 
-    // custom users routes
-    Route::get("/admin/users/manageRoles", [UserController::class, "showManageRoles"])->name("manage.roles");
-    Route::post("/admin/users/manageRoles/{userId}", [UserController::class, "ManageRoles"])->name("update.user.roles");
-    Route::get("/admin/users/getUser/{userId}", [UserController::class, "getUser"]);
-    Route::put("/admin/users/updateById/{userId}", [UserController::class, "updateById"]);
-
     // custom repairs routes
     Route::put("/admin/repairs/updateStatus/{repairId}/{status}", [RepairController::class, "updateStatus"]);
 
@@ -175,6 +169,12 @@ Route::middleware(['auth', "isAdmin"])->group(function () {
         'update' => 'users.update',
         'destroy' => 'users.destroy',
     ]);
+
+    // custom users routes
+    Route::get("/admin/users/manageRoles", [UserController::class, "showManageRoles"])->name("manage.roles");
+    Route::post("/admin/users/manageRoles/{userId}", [UserController::class, "ManageRoles"])->name("update.user.roles");
+    Route::get("/admin/users/getUser/{userId}", [UserController::class, "getUser"]);
+    Route::put("/admin/users/updateById/{userId}", [UserController::class, "updateById"]);
 
     Route::resource('admin/vehicles', VehicleController::class)->names([
         'index' => 'vehicles',

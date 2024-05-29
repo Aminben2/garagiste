@@ -9,6 +9,8 @@
                 <div class="modal-body">
                     <form class="row g-3" id="updateForm" action="" method="POST">
                         @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" value="" id="id">
                         <div class="col-md-12">
                             <label for="firstName" class="form-label">First Name</label>
                             <div class="input-group">
@@ -62,26 +64,26 @@
                                     placeholder="Address" />
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="updateUserBtn">Save changes</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="update-user-btn">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let id = "";
             const editButtons = document.querySelectorAll('.edit-btn');
             const firstNameaInput = document.getElementById('firstName');
+            const id = document.getElementById('id');
             const lastNameInput = document.getElementById('lastName');
             const usernameInput = document.getElementById('username');
             const emailInput = document.getElementById('email');
             const addressInput = document.getElementById('address');
             const phoneNumberInput = document.getElementById('phoneNumber');
-            const updateUserBtn = document.getElementById('update-user-btn');
+            const updateUserBtn = document.getElementById('updateUserBtn');
             const updateForm = document.getElementById('updateForm')
             const roleContainer = document.getElementById("rolesContainer")
 
@@ -93,9 +95,10 @@
                         .then(response => response.json())
                         .then(data => {
                             // updateForm.action = `/admin/users/updateById/${data.user.id}`
-                            id = data.user.id
+                            // id = data.user.id
                             // Populate user details in the form
                             firstNameaInput.value = data.user.firstName;
+                            id.value = data.user.id
                             lastNameInput.value = data.user.lastName;
                             usernameInput.value = data.user.username;
                             addressInput.value = data.user.address;
@@ -137,18 +140,21 @@
             });
 
             // Update user details when Save Changes button is clicked
-            updateUserBtn.addEventListener('click', function(event) {
+            updateForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                const formData = new FormData(document.getElementById('updateForm'));
+                const formData = new FormData(updateForm);
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                fetch("/admin/users/updateById/" + id, {
+                const url = `/admin/users/updateById/${formData.get('id')}`
+                fetch(url, {
                         method: 'PUT',
                         body: formData,
                         headers: {
                             'X-CSRF-TOKEN': csrfToken
                         }
                     })
+                    .then(response => response.json())
                     .then(response => {
+                        console.log(response);
                         if (response.ok) {
                             // Optionally, you can close the modal or display a success message
                             console.log('User details updated successfully');
