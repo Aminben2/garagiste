@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Repair;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

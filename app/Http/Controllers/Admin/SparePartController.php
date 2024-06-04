@@ -17,7 +17,6 @@ class SparePartController extends Controller
      */
     public function index()
     {
-
         $spareParts = SparePart::query();
 
         $search = request('search');

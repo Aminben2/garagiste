@@ -3,7 +3,6 @@
     <form id="searchForm">
         <input type="text" name="search" class="form-control ps-5 radius-30"
             placeholder="{{ __('Search') }} {{ __($searchItem) }}" id="searchInput" value="">
-
         <button type="submit" class="d-none"></button> <!-- to submit the form -->
         <span class="position-absolute top-50 product-show translate-middle-y"><i class="bx bx-search"></i></span>
         <!-- Check if search query exists -->

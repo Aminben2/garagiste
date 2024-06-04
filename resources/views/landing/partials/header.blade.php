@@ -45,11 +45,7 @@
                                 $route = route('client.dashboard');
                             @endphp
                         @endif
-                        {{-- @if (auth()->user()->roles->contains('name', 'mechanic'))
-                            @php
-                                $route = route('mechanic.dashboard');
-                            @endphp
-                        @endif --}}
+
                         <li class="flex items-center">
                             <a href="{{ $route }}"
                                 class="bg-white text-gray-800 active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
