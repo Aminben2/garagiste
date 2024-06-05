@@ -20,17 +20,15 @@
                 data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                <a class="dropdown-item" href="{{ route('users') }}">Manage users</a>
-                <a class="dropdown-item" href="{{ route('manage.roles') }}">Manage roles</a>
+                <a class="dropdown-item" href="{{ route('users') }}">{{ __('Manage users') }}</a>
+                <a class="dropdown-item" href="{{ route('manage.roles') }}">{{ __('Manage roles') }}</a>
                 <div class="dropdown-divider"></div>
                 <button type="button" class="dropdown-item" id="importButton" data-bs-toggle="modal"
                     data-bs-target="#importModal">
-                    Import {{ $page }}
+                    {{ __('Import users') }}
                 </button>
-                <a class="dropdown-item" href="{{ $exportRoute }}">Export {{ $page }}</a>
-                {{-- @component('admin.components.export--button', ['title' => $page, 'exportRoute' => $exportRoute])
-                @endcomponent --}}
-                <button class="dropdown-item" onclick="window.location.reload()">Refresh page</button>
+                <a class="dropdown-item" href="{{ $exportRoute }}">{{ __('Export users') }}</a>
+                <button class="dropdown-item" onclick="window.location.reload()">{{ __('Refresh page') }}</button>
             </div>
         </div>
     </div>

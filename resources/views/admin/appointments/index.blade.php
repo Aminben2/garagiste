@@ -28,34 +28,35 @@
                 <div class="ms-auto">
                     <form action="{{ route('appointments') }}">
                         <select name="repair_status" id="repair_status" class="form-select" onchange="this.form.submit()">
-                            <option value="">All Statuses</option>
-                            <option value="pending" {{ request()->repair_status == 'pending' ? 'selected' : '' }}>Pending
-                            </option>
+                            <option value="">{{ __('All Statuses') }}</option>
+                            <option value="pending" {{ request()->repair_status == 'pending' ? 'selected' : '' }}>
+                                {{ __('Pending') }}</option>
                             <option value="confirmed" {{ request()->repair_status == 'confirmed' ? 'selected' : '' }}>
-                                Confirmed</option>
-                            <option value="in_progress" {{ request()->repair_status == 'in_progress' ? 'selected' : '' }}>In
-                                Progress</option>
+                                {{ __('Confirmed') }}</option>
+                            <option value="in_progress" {{ request()->repair_status == 'in_progress' ? 'selected' : '' }}>
+                                {{ __('In Progress') }}</option>
                             <option value="completed" {{ request()->repair_status == 'completed' ? 'selected' : '' }}>
-                                Completed</option>
-                            <option value="canceled" {{ request()->repair_status == 'canceled' ? 'selected' : '' }}>Canceled
-                            </option>
+                                {{ __('Completed') }}</option>
+                            <option value="canceled" {{ request()->repair_status == 'canceled' ? 'selected' : '' }}>
+                                {{ __('Canceled') }}</option>
                             <option value="rescheduled" {{ request()->repair_status == 'rescheduled' ? 'selected' : '' }}>
-                                Rescheduled</option>
+                                {{ __('Rescheduled') }}</option>
                         </select>
                     </form>
                 </div>
+
             </div>
             @if (count($appointments) > 0)
                 <div class="table-responsive">
                     <table class="table mb-0" id="example">
                         <thead class="table-light">
                             <tr>
-                                <th>Apointment#</th>
-                                <th>Title</th>
-                                <th>Status</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Actions</th>
+                                <th>{{ __('Appointment#') }}</th>
+                                <th>{{ __('Title') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Start Date') }}</th>
+                                <th>{{ __('End Date') }}</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,7 +123,7 @@
                 </div>
             @else
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
-                    <div class="text-white">There are no appointments!</div>
+                    <div class="text-white">{{ __('There are no appointments!') }}</div>
                 </div>
             @endif
         </div>

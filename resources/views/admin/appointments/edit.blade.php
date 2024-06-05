@@ -3,36 +3,38 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Appointment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="editModalLabel">{{ __('Edit Appointment') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="{{ __('Close') }}"></button>
             </div>
             <form method="POST" action="" id="editModalForm">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="etitle" class="form-label">Title</label>
+                        <label for="etitle" class="form-label">{{ __('Title') }}</label>
                         <input type="text" class="form-control" id="etitle" name="title" required
                             value="">
                     </div>
                     <div class="mb-3">
-                        <label for="edescription" class="form-label">Description</label>
+                        <label for="edescription" class="form-label">{{ __('Description') }}</label>
                         <textarea class="form-control" id="edescription" name="description" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="estart_datetime" class="form-label">Start date</label>
+                        <label for="estart_datetime" class="form-label">{{ __('Start date') }}</label>
                         <input type="datetime-local" class="form-control" id="estart_datetime" name="start_datetime"
                             required>
                     </div>
                     <div class="mb-3">
-                        <label for="eend_datetime" class="form-label">End date</label>
+                        <label for="eend_datetime" class="form-label">{{ __('End date') }}</label>
                         <input type="datetime-local" class="form-control" id="eend_datetime" name="end_datetime"
                             required value="">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="updateBtn" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button id="updateBtn" class="btn btn-primary">{{ __('Save changes') }}</button>
                 </div>
             </form>
         </div>

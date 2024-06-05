@@ -10,18 +10,18 @@
         <div class="table-responsive">
             @if ($vehicles->count() === 0)
                 <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
-                    <div class="text-white">User has no vehicles</div>
+                    <div class="text-white">{{ __('User has no vehicles') }}</div>
                 </div>
             @else
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Make</th>
-                            <th>Model</th>
-                            <th>Fuel Type</th>
-                            <th>Registration</th>
-                            <th>Start Date</th>
+                            <th>{{ __('Id') }}</th>
+                            <th>{{ __('Make') }}</th>
+                            <th>{{ __('Model') }}</th>
+                            <th>{{ __('Fuel Type') }}</th>
+                            <th>{{ __('Registration') }}</th>
+                            <th>{{ __('Start Date') }}</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -10,7 +10,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between mb-2 w-100">
-                                <p class="mb-0">Total Invoices</p>
+                                <p class="mb-0">{{ __('Total Invoices') }}</p>
                                 <div class="">
                                     <span
                                         class="badge bg-light-success d-flex justify-content-between text-success rounded-5 border-success border">+
@@ -33,7 +33,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between mb-2 w-100">
-                                <p class="mb-0">New Customers</p>
+                                <p class="mb-0">{{ __('New Customers') }}</p>
                                 <div class="">
                                     <span
                                         class="badge bg-light-danger d-flex justify-content-between text-danger rounded-5 border-danger border border-opacity-25">+
@@ -56,7 +56,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between mb-2 w-100">
-                                <p class="mb-0">Total Repairs</p>
+                                <p class="mb-0">{{ __('Total Repairs') }}</p>
                                 <div class="">
                                     <span
                                         class="badge bg-light-success d-flex justify-content-between text-success rounded-5 border-success border">+
@@ -79,7 +79,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between mb-2 w-100">
-                                <p class="mb-0">Total Vehicles</p>
+                                <p class="mb-0">{{ __('Total Vehicles') }}</p>
                                 <div class="">
                                     <span
                                         class="badge bg-light-danger d-flex justify-content-between text-danger rounded-5 border-danger border border-opacity-25">+
@@ -93,15 +93,16 @@
                 </div>
             </div>
         </div>
-    </div><!--end row-->
+    </div>
+    <!--end row-->
     <div class="row row-cols-1 row-cols-lg-2">
         <div class="col mb-4">
             <div class="card radius-10" style="height: auto">
                 <div class="card-body">
                     <canvas id="areaChartRepairs"></canvas>
                     <select id="chartTypeRepairs" class="form-select mt-3">
-                        <option value="line">Line</option>
-                        <option value="bar">Bar</option>
+                        <option value="line">{{ __('Line') }}</option>
+                        <option value="bar">{{ __('Bar') }}</option>
                         <!-- Add more chart types as needed -->
                     </select>
                 </div>
@@ -112,8 +113,8 @@
                 <div class="card-body" style="height: auto">
                     <canvas id="areaChartVehicles"></canvas>
                     <select id="chartTypeVehicles" class="form-select mt-3">
-                        <option value="bar">Bar</option>
-                        <option value="pie">Pie</option>
+                        <option value="bar">{{ __('Bar') }}</option>
+                        <option value="pie">{{ __('Pie') }}</option>
                         <!-- Add more chart types as needed -->
                     </select>
                 </div>
@@ -125,8 +126,8 @@
                     <div class="card-body">
                         <canvas id="areaChartUsers"></canvas>
                         <select id="chartTypeUsers" class="form-select mt-3">
-                            <option value="pie">Pie</option>
-                            <option value="line">Line</option>
+                            <option value="pie">{{ __('Pie') }}</option>
+                            <option value="line">{{ __('Line') }}</option>
                             <!-- Add more chart types as needed -->
                         </select>
                     </div>
@@ -134,6 +135,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         var ctx1 = document.getElementById('areaChartRepairs').getContext('2d');
